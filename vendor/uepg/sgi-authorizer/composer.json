@@ -1,0 +1,32 @@
+{
+    "name": "uepg/sgi-authorizer",
+    "description": "Pacote cliente para aplicativos Laravel que gerencia a autorização (login) de acesso aos sistemas UEPG usando o servidor SGI-Server-Security",
+    "authors": [
+	{
+		"name": "João Henrique Moretti Pellissari",
+		"email": "pellissari.joao@gmail.com"
+	},
+        {
+            "name": "Ademir Mazer Junior",
+            "email": "mazer@uepg.br"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "laravel/framework": ">=5.1.0",
+        "laravelcollective/html": ">=5.1.0",
+        "guzzlehttp/guzzle": "~6.0"
+    },
+    "suggest": {
+	   "uepg/sgi-user": "Permite utilizar o model padrão de usuario para fazer login na aplicacao"
+    },
+    "repositories": {
+        "type": "vcs",
+	   "url": "git@git.uepg.br:sgi/sgi-user.git"
+    },
+     "autoload": {
+        "psr-4": {
+            "Uepg\\SGIAuthorizer\\": "src/"
+        }
+    }
+}

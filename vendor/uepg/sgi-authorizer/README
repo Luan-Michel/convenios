@@ -1,0 +1,7 @@
+# SGI-Authorizer
+
+Pacote para os projetos de Laravel 5, com middleware de testes de autenticação
+e gestão de tokens de autenticação.
+
+Documentação oficial no Redmine NTI - [Projeto SGI Security Server](https://redmine.uepg.br/redmine/projects/sgi-security-server/wiki).
+

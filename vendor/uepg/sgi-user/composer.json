@@ -1,0 +1,26 @@
+{
+    "name": "uepg/sgi-user",
+    "description": "Pacote com o modelo padrão Usuário para projetos SGI",
+    "type": "Library",
+    "license": "Proprietary",
+    "authors": [
+        {
+            "name": "Hebertom Gadiel Kogut",
+            "email": "12150726@uepg.br"
+        },
+        {
+            "name": "João Henrique Moretti Pellissari",
+            "email": "pellissari.joao@gmail.com"
+        },
+        {
+            "name": "Ademir Mazer Junior",
+            "email": "mazer@uepg.br"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Uepg\\SGIUser\\": "src/"
+        }
+    }
+}
