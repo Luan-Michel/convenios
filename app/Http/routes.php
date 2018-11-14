@@ -18,7 +18,7 @@ Route::group(['middleware' => 'sgiauth'], function() {
 
     Route::get('/', 'PrincipalController@Index');
     Route::get('convenio', ['as'=>'/', 'uses'=>'PrincipalController@Index']);
-    Route::get('/principal', 'PrincipalController@Index');
+    Route::get('principal', 'PrincipalController@Index');
     Route::get('errors/js', 'PrincipalController@js');
 
     Route::get('pdfs/{filename}', function ($filename)
