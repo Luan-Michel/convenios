@@ -78,7 +78,7 @@
             {!! Form::close()!!}
             <div class="col-md-1">
                 <label for="firstName" class="control-label"><font color="#F0F0F0">.</font></label><br>
-                <a href="{{ route('planodetrabalho',[$ano,$conv,$fin[0]->id_financiador])}}"class="btn btn-primary">&nbspVoltar</a>
+                <a href="{{ route('planodetrabalho',[$ano,$conv,$fin[0]->id_financiador])}}"class="btn btn-warning">&nbspVoltar</a>
 
             </div>
 

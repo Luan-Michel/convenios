@@ -30,16 +30,26 @@
 
         <div class="col-md-6  pull-right">
             {!! Form::label('cd_coordenador','Coordenador')!!}
-            <select class="form-control" name="state">
-              <option value="NÃO"></option>
-              <option value="SIM"></option>
+            <select class="form-control" id="cd_coordenador" name="cd_coordenador">
+              <option selected value="N">Não</option>
+              <option value="S">Sim</option>
+            </select>
+            <br><br>
+        </div>
+
+        <div class="col-md-6  pull-right">
+            {!! Form::label('cd_categoria','Categoria')!!}
+            <select class="form-control" id="cd_categoria" name="cd_categoria">
+              <option selected value="S">Servidor</option>
+              <option value="A">Acadêmico</option>
+              <option value="C">Convidado</option>
             </select>
             <br><br>
         </div>
 
         <div class=" col-md-6">
             {!! Form::label('id_convenio', 'Convenio')!!}
-            <select class="form-control js-example-basic-single" name="id_convenio">
+            <select class="form-control js-example-basic-single" id="id_convenio" name="id_convenio">
               <option value=""></option>
               @foreach($convenio as $c)
                   <option value="{{$c->id_convenio}}">{{$c->ds_sigla_objeto}}</option>
@@ -57,7 +67,9 @@
 
         <div class="col-md-6">
             {!! Form::label('id_pessoa_instituicao','Instituição')!!}
-            <input  disabled name="id_pessoa_instituicao" id="id_pessoa_instituicao" class="form-control">
+            <input  disabled name="instituicao" id="instituicao" class="form-control">
+            <input  type="hidden" name="id_pessoa_instituicao" id="id_pessoa_instituicao" class="form-control">
+
             <br><br>
         </div>
 
@@ -111,9 +123,12 @@
                 data: {'X-CSRF-TOKEN': csrf_token, cnpj: cnpj},
                 dataType: "json"
             }).done(function (data) {
-                document.getElementById('id_pessoa_instituicao').value=data;
+                console.log(data);
+                document.getElementById('instituicao').value=data.nm_pessoa_abreviado;
+                document.getElementById('id_pessoa_instituicao').value=data.id_pessoa;
             }).fail(function (data) {
-                document.getElementById('id_pessoa_instituicao').value="CNPJ NÃO CADASTRADO!";
+                document.getElementById('instituicao').value="CNPJ NÃO CADASTRADO!";
+                document.getElementById('id_pessoa_instituicao').value="";
                 // $("#id_pessoa_instituicao").empty();
 
             });

@@ -64,25 +64,20 @@ class PessoaConvenioController extends Controller
     }
 
     public
-    function store(PessoaConvenioRequest $request)
+    function store(Request $request)
     {
         $input = $request->all();
         //dd($input);
-
-        $id_instituicao = \App\PessoaJuridica::where('cnpj', $new_cnpj)->get();
 
         $vetor = array();
 
         $vetor['id_convenio'] = $input['id_convenio'];
         $vetor['id_pessoa_participante'] = $input['id_pessoa_participante'];
-        $vetor['id_pessoa_instituição'] = $id_instituicao;
+        $vetor['id_pessoa_instituicao'] = $input['id_pessoa_instituicao'];
         $vetor['cd_coordenador'] = $input['cd_coordenador'];
         $vetor['cd_categoria'] = $input['cd_categoria'];
 
-        $vetor['id_pessoa_instituicao'] = $id_instituicao[0]->id_pessoa;
-
-
-        Participantes::create($vetor);
+        DB::TABLE('AC_PARTICIPANTES')->INSERT($vetor);
 
         return \Redirect::to('planodetrabalho');
     }
@@ -125,19 +120,14 @@ class PessoaConvenioController extends Controller
     public
     function Deletar($id_convenio, $id_pessoa)
     {
-        DB::beginTransaction();
         try {
-            $part = \App\Participantes::where('nr_convenio', $id_convenio)->where('id_pessoa_participante', $id_pessoa)->get();
-            $part->delete();
+            DB::TABLE('AC_PARTICIPANTES')->where('id_convenio', $id_convenio)->where('id_pessoa_participante', $id_pessoa)->delete();
         }catch (\Exception $e) {
-            DB::rollBack();
             return response()->json(array('msg' => 'O cadastro não pode ser excluído porque possui dependência.', 'status' => 'Error'));
         }
         catch (\Throwable $e) {
-            DB::rollBack();
             return response()->json(array('msg' => 'O cadastro não pode ser excluído porque possui dependência.', 'status' => 'Error'));
         }
-        DB::commit();
         return response()->json(array('msg' => 'Cadastro excluído com sucesso.', 'status' => 'Success'));
     }
 
@@ -146,11 +136,13 @@ class PessoaConvenioController extends Controller
         $new_cnpj = str_replace("-","",$new_cnpj);
         $new_cnpj = str_replace("/","",$new_cnpj);
 
-        $inst = DB::select(DB::raw("select nm_pessoa_completo from pessoa..pessoa p
-                inner join pessoa..pessoa_juridica pj on p.id_pessoa = pj.id_pessoa
-                where pj.cnpj = '$new_cnpj'"));
+        $inst = DB::TABLE('PESSOA..PESSOA_JURIDICA')
+                      ->WHERE('cnpj', $new_cnpj)
+                      ->JOIN('PESSOA..PESSOA', 'PESSOA..PESSOA.id_pessoa','=', 'PESSOA..PESSOA_JURIDICA.id_pessoa')
+                      ->SELECT('PESSOA..PESSOA.nm_pessoa_abreviado', 'PESSOA..PESSOA_JURIDICA.id_pessoa')
+                      ->first();
 
-        return response()->json($inst[0]->nm_pessoa_completo);
+        return response()->json($inst);
     }
 
 

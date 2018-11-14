@@ -13,6 +13,6 @@ class Participantes extends Model
 
   public $timestamps = false;
 
-  protected $fillable = ['id_financiador', 'ano_convenio', 'nr_convenio', 'id_pessoa_participante', 'id_pessoa_instituicao', 'cd_coordenador'];
+  protected $fillable = ['id_convenio', 'id_pessoa_participante', 'id_pessoa_instituicao', 'cd_coordenador', 'cd_categoria'];
 
 }

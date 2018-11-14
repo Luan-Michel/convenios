@@ -33,6 +33,55 @@
     {{--CKEditor--}}
     <script src="{{ asset('/ckeditor/ckeditor.js')}}"></script>
 
+    <style>
+    /* Dropdown Button */
+.dropbtn {
+background-color: #3498DB;
+color: white;
+padding: 16px;
+font-size: 16px;
+border: none;
+cursor: pointer;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover, .dropbtn:focus {
+background-color: #2980B9;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+position: relative;
+display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+display: none;
+position: absolute;
+background-color: #f1f1f1;
+min-width: 160px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+color: black;
+padding: 12px 16px;
+text-decoration: none;
+display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;}
+
+</style>
+
+
 </head>
 <body id="corpo">
 <!-- Fixed navbar -->
@@ -44,11 +93,35 @@
                 <img src="{{asset('images/UEPG.png')}}" alt="UEPG - Universidade Estadual de Ponta Grossa"
                      class="img-responsive" style="margin-top: -4px;">
             </a>
-            <br>
+        <br>
 
+        </div>
+
+        <div class="navbar-header" style="padding: 0 25px;" >
+            <br>
+            <div class="dropdown">
+              <button onclick="myFunction()" class="dropbtn">Menu</button>
+              <div id="myDropdown" class="dropdown-content">
+                <a href="{{ url('financiador') }}">Financiador</a>
+                <a href="{{ url('categoriaconvenio') }}"> Categoria de Convênio</a>
+                <a href="{{ url('convenio') }}">Convênio</a>
+                <a href="{{ url('previoempenho') }}"> Prévio Empenho</a>
+                <a href="{{ route('pessoa')}}"> Pessoa</a>
+                <a href="{{ route('pessoaconvenio')}}">Participante</a>
+                <a href="{{ url('planodetrabalho') }}"> Plano de trabalho</a>
+                <a href="{{ url('etapaplanodetrabalho') }}"> Etapa do plano de trabalho</a>
+                <a href="{{ url('etapaparticipantes') }}"> Etapa participantes</a>
+                <a href="{{ url('etapaitem') }}"> Etapa Item</a>
+                <a href="{{ url('ajuda') }}"> Ajuda</a>
+              </div>
             </div>
+        <br>
+
+        </div>
 
         <div class="navbar-header navbar-right" style="padding: 0 15px; float: right; margin-top: 35px;">
+
+
           <ul class="nav navbar-nav navbar-right" >
               <!-- Authentication Links -->
               @if (Auth::guest())
@@ -69,7 +142,7 @@
         <div align="center" style="padding: 0 30px; ">
             <br>
             <a href="{{ url('principal') }}">
-                <h1><font color="#2A166F"><b>CONTROLE DE CONVÊNIOS</b></font></h1>
+                <h1><font color="#2A166F"><b>SISCONV</b></font></h1>
             </a>
             <br>
         </div>
@@ -103,6 +176,31 @@
     </div>
 </footer>
 </body>
+
+<script type="text/javascript" >
+
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+</script>
 
 
 <script src="{{ asset('/js/angular.min.js') }}"></script>
