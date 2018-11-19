@@ -3,7 +3,14 @@
 @section('content')
 
     <div class="container">
-        <h1>Item na Etapa</h1>
+        <div class="col-md-12" id="cabecalho">
+          <div class="col-md-6">
+            <h1>Item na Etapa</h1>
+          </div>
+          <div style="padding-top: 20px" class="col-md-6">
+             <a href="{{route('ajuda')}}#item_etapa" target="_blank" style="float:right;" class="btn btn-default"> <span class="glyphicon glyphicon-question-sign"></span> </a>
+          </div>
+        </div>
         @if($errors->any())
             <ul class="alert alert-warning">
                 @foreach($errors->all()as$error)
@@ -77,23 +84,25 @@
         </div>
         <br>
 
-
-        <!--Bot�o-->
-        <div class="col-md-3">
-            <label for="firstName" class="control-label"><font color="#F0F0F0">.</font></label>
-            <div class="form-group">
-                {!! Form::submit('Salvar', ['class'=>'btn btn-success'])!!}
-            </div>
-        </div>
-        {!! Form::close()!!}
-                <!--Bot�o voltar-->
         <div class="col-md-1">
             <label for="firstName" class="control-label"><font color="#F0F0F0">.</font></label>
+            <br>
             <a href="<?php echo url('etapaitem'); ?>">
-                {!! Form::button('Voltar', ['class'=>'btn btn-primary'])!!}
+                {!! Form::button('Voltar', ['class'=>'btn btn-warning'])!!}
             </a>
         </div>
 
+        <!--Bot�o-->
+        <div class="col-md-2">
+            <label for="firstName" class="control-label"><font color="#F0F0F0">.</font></label>
+            <br>
+            {!! Form::submit('Salvar', ['class'=>'btn btn-success'])!!}
+
+        </div>
+
+
+        {!! Form::close()!!}
+        
         <link href="{{asset('select2-4.0.6-rc.1/dist/css/select2.min.css')}}" rel="stylesheet" />
         <script src="{{asset('select2-4.0.6-rc.1/dist/js/select2.min.js')}}"></script>
 

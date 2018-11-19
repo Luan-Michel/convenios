@@ -1,7 +1,15 @@
 @extends('app')
 @section('content')
     <div class='container'>
-        <h1>Pessoa</h1>
+        <div class="col-md-6">
+          <h1>Pessoa</h1>
+        </div>
+        <div style="padding-top: 20px" class="col-md-6">
+           <a href="{{route('ajuda')}}#pessoa" target="_blank" style="float:right;" class="btn btn-default"> <span class="glyphicon glyphicon-question-sign"></span> </a>
+        </div>
+        <div class="col-md-6">
+          <br>
+        </div>
         <a href="{{ route('pessoa.adicionarpessoafisica')}}" class="btn btn-default">
             <i class="glyphicon glyphicon-plus"></i>&nbsp; Pessoa Física</a>
         <a href="{{ route('pessoa.adicionarinstituicao')}}" class="btn btn-default">

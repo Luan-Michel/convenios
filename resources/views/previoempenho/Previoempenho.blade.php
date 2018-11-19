@@ -2,7 +2,14 @@
 
 @section('content')
     <div class='container'>
-        <h1>Prévio Empenho</h1>
+      <div class="col-md-12" id="cabecalho">
+        <div class="col-md-6">
+          <h1>Prévio Empenho</h1>
+        </div>
+        <div style="padding-top: 20px" class="col-md-6">
+           <a href="{{route('ajuda')}}#previoempenho" target="_blank" style="float:right;" class="btn btn-default"> <span class="glyphicon glyphicon-question-sign"></span> </a>
+        </div>
+      </div>
         <div class="col-md-1" align="right">
           <a href="<?php echo url('principal'); ?>">
               {!! Form::button('Voltar', ['class'=>'btn btn-warning'])!!}
@@ -12,9 +19,8 @@
             <a href="{{ route('previoempenho.Cadastrar')}}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i>&nbsp;Novo</a>
         </div>
         <div class="col-md-6" align="right">
-
+          <br>
         </div>
-        <br><br><br>
         <div class="col-md-12">
             <table class="table table-striped table-bordered table-hover" id="table">
                 <thead>

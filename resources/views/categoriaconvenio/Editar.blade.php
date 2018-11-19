@@ -14,7 +14,14 @@
         </ul>
     @endif
     <div class='container'>
-        <h1>Categoria de convênio{{-- {{$categoria->ds_categoria}}--}}</h1>
+      <div class="col-md-12" id="cabecalho">
+        <div class="col-md-6">
+          <h1>Categoria de convênio{{-- {{$categoria->ds_categoria}}--}}</h1>
+        </div>
+        <div style="padding-top: 20px" class="col-md-6">
+           <a href="{{route('ajuda')}}#categoria" target="_blank" style="float:right;" class="btn btn-default"> <span class="glyphicon glyphicon-question-sign"></span> </a>
+        </div>
+      </div>
 
 
 
@@ -43,7 +50,7 @@
             <br><br>
 
             <a href="<?php echo url('categoriaconvenio'); ?>">
-                {!! Form::button('Voltar', ['class'=>'btn btn-primary'])!!}
+                {!! Form::button('Voltar', ['class'=>'btn btn-warning'])!!}
             </a>
         </div>
         <br><br><br><br><br><br>

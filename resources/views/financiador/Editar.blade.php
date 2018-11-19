@@ -13,7 +13,12 @@
         </ul>
     @endif
     <div class='container'>
-        <h1>Financiador</h1>
+        <div class="col-md-6">
+          <h1>Financiador</h1>
+        </div>
+        <div style="padding-top: 20px" class="col-md-6">
+           <a href="{{route('ajuda')}}#financiador" target="_blank" style="float:right;" class="btn btn-default"> <span class="glyphicon glyphicon-question-sign"></span> </a>
+        </div>
 
         {!!Form::open(['route'=>['financiador.atualizabanco', $financiador->id_financiador], 'id'=>'signupForm', 'method'=>'put'])!!}
 
@@ -58,7 +63,7 @@
         <div class="col-md-1" style="margin-top: 15px">
             <br>
             <a href="<?php echo url('financiador'); ?>">
-                {!! Form::button('Voltar', ['class'=>'btn btn-primary'])!!}
+                {!! Form::button('Voltar', ['class'=>'btn btn-warning'])!!}
             </a>
         </div>
     </div>

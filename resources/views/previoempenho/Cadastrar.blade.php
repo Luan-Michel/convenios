@@ -8,7 +8,14 @@
                 @endforeach
             </ul>
         @endif
-        <h1>Prévio Empenho</h1>
+        <div class="col-md-12" id="cabecalho">
+          <div class="col-md-6">
+            <h1>Prévio Empenho</h1>
+          </div>
+          <div style="padding-top: 20px" class="col-md-6">
+             <a href="{{route('ajuda')}}#previoempenho" target="_blank" style="float:right;" class="btn btn-default"> <span class="glyphicon glyphicon-question-sign"></span> </a>
+          </div>
+        </div>
         {!! Form::open(['route'=>'previoempenho.store', 'files' =>true])!!}
         <div class="col-md-2">
             {!! Form::label('ano_rpe','Ano do prévio')!!}
@@ -159,7 +166,7 @@
             <br><br>
             {{--<label for="firstName" class="control-label"></label>--}}
             <a href="<?php echo url('previoempenho'); ?>">
-                {!! Form::button('Voltar', ['class'=>'btn btn-primary'])!!}
+                {!! Form::button('Voltar', ['class'=>'btn btn-warning'])!!}
             </a>
         </div>
     </div>

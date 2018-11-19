@@ -6,7 +6,6 @@
         </div>
     @endif
     <div class="container">
-        <h1>Plano de trabalho</h1>
         @if($errors->any())
             <ul class="alert alert-warning">
                 @foreach($errors->all()as$error)
@@ -14,6 +13,12 @@
                 @endforeach
             </ul>
         @endif
+        <div class="col-md-6">
+          <h1>Plano de Trabalho</h1>
+        </div>
+        <div style="padding-top: 20px" class="col-md-6">
+           <a href="{{route('ajuda')}}#plano_de_trabalho" target="_blank" style="float:right;" class="btn btn-default"> <span class="glyphicon glyphicon-question-sign"></span> </a>
+        </div>
         <br>
     {!! Form::open(['route'=>'planodetrabalho.store'])!!}
     <!--Financiador-->

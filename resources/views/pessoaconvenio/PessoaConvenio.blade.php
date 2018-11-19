@@ -2,7 +2,14 @@
 
 @section('content')
     <div class='container'>
-        <h1>Participantes</h1>
+        <div class="col-md-12" id="cabecalho">
+          <div class="col-md-6">
+            <h1>Participantes</h1>
+          </div>
+          <div style="padding-top: 20px" class="col-md-6">
+             <a href="{{route('ajuda')}}#participante" target="_blank" style="float:right;" class="btn btn-default"> <span class="glyphicon glyphicon-question-sign"></span> </a>
+          </div>
+        </div>
 
         <div class="col-md-1" align="right">
           <a href="<?php echo url('principal'); ?>">
@@ -17,6 +24,8 @@
         {{--<a href="{{ route('pessoa.adicionarpessoafisica')}}" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i>&nbsp; Pessoa Física</a>--}}
         {{--<a href="{{ route('pessoa.adicionarinstituicao')}}" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i>&nbsp; Pessoa Jurídica</a>--}}
         {{--</div>--}}
+        <br><br><br>
+        <br>
         <br><br><br>
         <div class="col-md-12">
             <table class="table tale-striped table-bordered table-hover" id="table">
@@ -37,18 +46,18 @@
                         <td>{{$p->nm_fantasia}}</td>
                         <td>{{$p->ds_sigla_objeto}}</td>
                         <td align="center">
-                            <a href="{{ route('pessoaconvenio.Editar',[$p->nr_convenio, $p->id_pessoa_participante])}}" class="btn-sm btn-default">
+                            <a href="{{ route('pessoaconvenio.Editar',[$p->id_convenio, $p->id_pessoa_participante])}}" class="btn-sm btn-default">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </a>
                         </td>
                         <td align="center">
-                           {{-- <a href="{{ route('pessoaconvenio.Deletar',[$p->nr_convenio, $p->id_pessoa_participante])}}" class="btn-sm btn-danger">
+                           {{-- <a href="{{ route('pessoaconvenio.Deletar',[$p->id_convenio, $p->id_pessoa_participante])}}" class="btn-sm btn-danger">
                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                             </a>--}}
 
-                            <a  class=" glyphicon glyphicon-trash btn-sm btn-danger" aria-hidden="true" onclick="ajaxDelete({{$p->nr_convenio, $p->id_pessoa_participante}})">
+                            <a  class=" glyphicon glyphicon-trash btn-sm btn-danger" aria-hidden="true" onclick="ajaxDelete({{$p->id_convenio, $p->id_pessoa_participante}})">
                             </a>
-                            {{--<a href="/pessoaconvenio/{{$p->nr_convenio}}/{{$p->id_pessoa_participante}}/visualizar" class="btn-sm btn-primary">Visualizar</a>--}}
+                            {{--<a href="/pessoaconvenio/{{$p->id_convenio}}/{{$p->id_pessoa_participante}}/visualizar" class="btn-sm btn-primary">Visualizar</a>--}}
                         </td>
                     </tr>
                 @endforeach
@@ -121,9 +130,9 @@
 
         function ajaxDelete($nr, $id) {
             var id_pessoa = $id;
-            var nr_convenio = $nr;
+            var id_convenio = $nr;
             var csrf_token = $('meta[name="csrf-token"]').attr('content');
-            var rota = window.location.href + "/" + nr_convenio+"/"+ id_pessoa + "/deletar";
+            var rota = window.location.href + "/" + id_convenio+"/"+ id_pessoa + "/deletar";
             swal({
                 title: "Tem certeza?",
                 text: "Você não será capaz de recuperar esse cadastro.",
@@ -139,7 +148,7 @@
                 $.ajax({
                     type: "POST",
                     url: rota,
-                    data: {_token: csrf_token, id_pessoa: id_pessoa, nr_convenio: nr_convenio},
+                    data: {_token: csrf_token, id_pessoa: id_pessoa, id_convenio: id_convenio},
                     dataType:"json",
                     success: function (data) {
                         console.log(data);

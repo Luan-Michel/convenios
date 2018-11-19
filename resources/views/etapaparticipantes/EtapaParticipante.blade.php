@@ -2,8 +2,15 @@
 
 @section('content')
 
-    <h1>Etapa Participante</h1>
     <div class="container">
+        <div class="col-md-12" id="cabecalho">
+          <div class="col-md-6">
+            <h1>Participantes de uma Etapa</h1>
+          </div>
+          <div style="padding-top: 20px" class="col-md-6">
+            <a href="{{route('ajuda')}}#participante_etapa" target="_blank" style="float:right;" class="btn btn-default"> <span class="glyphicon glyphicon-question-sign"></span> </a>
+          </div>
+        </div>
         {{-- <a class="btn btn-default" href="{{ route('etapaplanodetrabalho')}}" class="btn btn-primary">Visualizar Previo Empenho</a> --}}
 
         <div class="col-md-1" align="right">
@@ -15,6 +22,7 @@
             <a href="{{ route('etapaparticipantes.Cadastrar')}}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i>&nbsp;Novo</a>
         </div>
 
+        <br><br><br>
         <br><br><br>
         <table class="table table-striped table-hover table-bordered" id="table">
             <thead>

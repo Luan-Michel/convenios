@@ -2,7 +2,14 @@
 
 @section('content')
 <div class='container'>
-    <h1>Etapa Plano de Trabalho</h1>
+    <div class="col-md-12" id="cabecalho">
+      <div class="col-md-6">
+        <h1>Editar Etapa Plano de Trabalho</h1>
+      </div>
+      <div style="padding-top: 20px" class="col-md-6">
+         <a href="{{route('ajuda')}}#etapa_plano_de_trabalho" target="_blank" style="float:right;" class="btn btn-default"> <span class="glyphicon glyphicon-question-sign"></span> </a>
+      </div>
+    </div>
 
     @if($errors->any())
     <ul class="alert alert-warning">
@@ -117,7 +124,7 @@
     <div class="col-md-8">
         <label for="firstName" class="control-label"><font color="#F0F0F0">.</font></label><br>
         <a href="<?php echo url('etapaplanodetrabalho'); ?>">
-            {!! Form::button('Voltar', ['class'=>'btn btn-primary'])!!}
+            {!! Form::button('Voltar', ['class'=>'btn btn-warning'])!!}
         </a>
     </div>
 

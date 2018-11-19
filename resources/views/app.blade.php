@@ -102,6 +102,7 @@ display: block;
             <div class="dropdown">
               <button onclick="myFunction()" class="dropbtn">Menu</button>
               <div id="myDropdown" class="dropdown-content">
+                <a href="{{ url('principal') }}">Início</a>
                 <a href="{{ url('financiador') }}">Financiador</a>
                 <a href="{{ url('categoriaconvenio') }}"> Categoria de Convênio</a>
                 <a href="{{ url('convenio') }}">Convênio</a>

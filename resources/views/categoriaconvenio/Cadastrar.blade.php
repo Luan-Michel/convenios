@@ -2,9 +2,14 @@
 
 @section('content')
     <div class="container">
-        <div class="col-md-12">
-            <h1>Categoria de convênio</h1>
+      <div class="col-md-12" id="cabecalho">
+        <div class="col-md-6">
+          <h1>Categoria de convênio</h1>
         </div>
+        <div style="padding-top: 20px" class="col-md-6">
+           <a href="{{route('ajuda')}}#categoria" target="_blank" style="float:right;" class="btn btn-default"> <span class="glyphicon glyphicon-question-sign"></span> </a>
+        </div>
+      </div>
         @if($errors->any())
             <ul class="alert alert-warning">
                 @foreach($errors->all()as$error)

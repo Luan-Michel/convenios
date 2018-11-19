@@ -1,7 +1,14 @@
 @extends('app')
 @section('content')
     <div class="container">
-        <h1>Prévio Empenho</h1>
+      <div class="col-md-12" id="cabecalho">
+        <div class="col-md-6">
+          <h1>Alterar Prévio Empenho</h1>
+        </div>
+        <div style="padding-top: 20px" class="col-md-6">
+           <a href="{{route('ajuda')}}#previoempenho" target="_blank" style="float:right;" class="btn btn-default"> <span class="glyphicon glyphicon-question-sign"></span> </a>
+        </div>
+      </div>
         @if($errors->any())
             <ul class="alert alert-warning">
                 @foreach($errors->all()as$error)

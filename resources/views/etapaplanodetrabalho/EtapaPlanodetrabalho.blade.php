@@ -2,15 +2,21 @@
 
 @section('content')
     <div class='container'>
-
-        <h1>Etapa Plano de trabalho</h1>
-        <div class="col-md-1" align="left">
-          <a href="<?php echo url('principal'); ?>">
-              {!! Form::button('Voltar', ['class'=>'btn btn-warning'])!!}
-          </a>
+        <div class="col-md-6">
+          <h1>Etapa Plano de trabalho</h1>
         </div>
-        <div class="col-md-offset-10 col-md-1" align="left">
-            <a href="{{ route('etapaplanodetrabalho.Cadastrar')}}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i>&nbsp;Novo</a>
+        <div style="padding-top: 20px" class="col-md-6">
+           <a href="{{route('ajuda')}}#etapa_plano_de_trabalho" target="_blank" style="float:right;" class="btn btn-default"> <span class="glyphicon glyphicon-question-sign"></span> </a>
+        </div>
+        <div style="padding-bottom: 20px" class="col-md-12">
+          <div class="col-md-1" align="left">
+            <a href="<?php echo url('principal'); ?>">
+                {!! Form::button('Voltar', ['class'=>'btn btn-warning'])!!}
+            </a>
+          </div>
+          <div class="col-md-offset-10 col-md-1" align="left">
+              <a href="{{ route('etapaplanodetrabalho.Cadastrar')}}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i>&nbsp;Novo</a>
+          </div>
         </div>
         <br><br><br>
         <table class="table table-striped table-hover table-bordered" id="table">

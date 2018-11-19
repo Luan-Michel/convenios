@@ -7,7 +7,15 @@
         </div>
     @endif
     <div class='container'>
-        <h1>Diárias</h1>
+      <div class="col-md-12" id="cabecalho">
+        <div class="col-md-6">
+          <h1>Diárias</h1>
+        </div>
+        <div style="padding-top: 20px" class="col-md-6">
+           <a href="{{route('ajuda')}}#diaria" target="_blank" style="float:right;" class="btn btn-default"> <span class="glyphicon glyphicon-question-sign"></span> </a>
+        </div>
+      </div>
+      <br>
           <div class="col-md-1" align="right">
             <a href="<?php echo url('principal'); ?>">
                 {!! Form::button('Voltar', ['class'=>'btn btn-warning'])!!}
@@ -18,6 +26,7 @@
           </div>
 
 
+        <br><br><br>
         <br><br><br>
         <div class="col-md-12">
             <table class="table tale-striped table-bordered table-hover" id="table">

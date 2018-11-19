@@ -2,7 +2,14 @@
 
 @section('content')
     <div class="container">
-      <h1>Itens da Etapa</h1>
+      <div class="col-md-12" id="cabecalho">
+        <div class="col-md-6">
+          <h1>Itens da Etapa</h1>
+        </div>
+        <div style="padding-top: 20px" class="col-md-6">
+           <a href="{{route('ajuda')}}#item_etapa" target="_blank" style="float:right;" class="btn btn-default"> <span class="glyphicon glyphicon-question-sign"></span> </a>
+        </div>
+      </div>
         {{-- <a class="btn btn-default" href="{{ route('etapaplanodetrabalho')}}" class="btn btn-primary">Visualizar Previo Empenho</a> --}}
 
         <div class="col-md-1" align="right">

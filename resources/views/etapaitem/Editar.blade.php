@@ -18,7 +18,7 @@
     <div class="col-md-4">
         {!! Form::label('id_etapa_aplic','Etapa Plano de Trabalho')!!}
         <select required name="id_etapa_aplic" class="form-control margin-bottom-10" id="id_etapa_aplic">
-            <option value="{{$etapaplanodetrabalho[0]['id_etapa_aplic']}}">{{$etapaplanodetrabalho[0]['ds_titulo_etapa']}}</option>
+            <option value="{{$etapaplanodetrabalho->id_etapa_aplic}}">{{$etapaplanodetrabalho->ds_titulo_etapa}}</option>
             @foreach($ept as $ept)
                 <option value="{{$ept->id_etapa_aplic}}">{{$ept->ds_titulo_etapa}}</option>
             @endforeach
@@ -27,7 +27,7 @@
     <div class="col-md-8">
         {!! Form::label('cd_tabela','Despesa')!!}
         <select required name="cd_tabela" class="form-control margin-bottom-10" id="cd_tabela">
-            <option value="{{$despesa[0]['CD_TABELA']}}|{{$despesa[0]['CD_DESP']}}">{{$despesa[0]['NM_DESP']}}</option>
+            <option value="{{$despesa->CD_TABELA}}|{{$despesa->CD_DESP}}">{{$despesa->NM_DESP}}</option>
             @foreach($d as $d)
                 <option value="{{$d->CD_TABELA}}|{{$d->CD_DESP}}">{{$d->NM_DESP}}</option>
             @endforeach
@@ -36,7 +36,7 @@
     <div class="col-md-6">
         {!! Form::label('id_pais','País')!!}
         <select required name="id_pais" class="form-control margin-bottom-10" id="id_pais">
-            <option value="{{$pais[0]['id_pais']}}">{{$pais[0]['nm_pais']}} ({{$pais[0]['sigla_pais']}})</option>
+            <option value="{{$pais->id_pais}}">{{$pais->nm_pais}} ({{$pais->sigla_pais}})</option>
             @foreach($p as $p)
                 <option value="{{$p->id_pais}}">{{$p->nm_pais}} ({{$p->sigla_pais}})</option>
             @endforeach
@@ -45,7 +45,7 @@
     <div class="col-md-6">
         {!! Form::label('id_moeda','Moeda')!!}
         <select required name="id_moeda" class="form-control margin-bottom-10" id="id_moeda">
-            <option value="{{$moeda[0]['id_moeda']}}">{{$moeda[0]['ds_moeda']}} ({{$moeda[0]['sigla_moeda']}})</option>
+            <option value="{{$moeda->id_moeda}}">{{$moeda->ds_moeda}} ({{$moeda->sigla_moeda}})</option>
             @foreach($m as $m)
                 <option value="{{$m->id_moeda}}">{{$m->ds_moeda}} ({{$m->sigla_moeda}})</option>
             @endforeach
@@ -53,23 +53,23 @@
     </div>
     <div class="col-md-3 margin-bottom-5" id="dp2">
         {!! Form::label('dt_aplicacao','Data Aplicação')!!}
-        <br><input id="dt_aplicacao" required class="date" name="dt_aplicacao" value="{{$etapaitem[0]['dt_aplicacao']}}" type="text"/><br>
+        <br><input id="dt_aplicacao" required class="date" name="dt_aplicacao" value="{{$etapaitem->dt_aplicacao}}" type="text"/><br>
     </div>
     <div class="col-md-3">
         {!! Form::label('vl_item','Valor unitário Item')!!}
-        <input required id="vl_item" data-mask="#.##0,00" data-mask-reverse="true" name="vl_item" type="text" value="{{$etapaitem[0]['vl_item']}}" class="form-control margin-bottom-10">
+        <input required id="vl_item" data-mask="#.##0,00" data-mask-reverse="true" name="vl_item" type="text" value="{{$etapaitem->vl_item}}" class="form-control margin-bottom-10">
     </div>
     <div class="col-md-3">
         {!! Form::label('qt_item','Quantidade Item')!!}
-        <input required id="qt_item" name="qt_item" type="text" value="{{$etapaitem[0]['qt_item']}}" class="form-control margin-bottom-10">
+        <input required id="qt_item" name="qt_item" type="text" value="{{$etapaitem->qt_item}}" class="form-control margin-bottom-10">
     </div>
     <div class="col-md-3">
         {!! Form::label('vl_total_item','Valor Total Item')!!}
-        <input required id="vl_total_item" data-mask="#.##0,00" data-mask-reverse="true" name="vl_total_item" value="{{$etapaitem[0]['vl_total_item']}}" type="text" class="form-control margin-bottom-10">
+        <input required id="vl_total_item" data-mask="#.##0,00" data-mask-reverse="true" name="vl_total_item" value="{{$etapaitem->vl_total_item}}" type="text" class="form-control margin-bottom-10">
     </div>
     <div class="col-md-12">
         {!! Form::label('ds_item','Descrição Item')!!}
-        {!! Form::textarea('ds_item', $etapaitem[0]['ds_item'], ['class'=>'form-control'])!!}
+        {!! Form::textarea('ds_item', $etapaitem->ds_item, ['class'=>'form-control'])!!}
     </div>
 
     <div class="col-md-3">

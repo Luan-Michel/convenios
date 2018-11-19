@@ -2,14 +2,21 @@
 @section('content')
     @if($errors->any())
         <ul class="alert alert-warning">
-            @foreach($errors->all()as$error)
+            @foreach($errors->all() as $error)
                 <li>{{ $error}}</li>
             @endforeach
         </ul>
     @endif
 
     <div class="container">
-        <h1>Incluir Participante</h1>
+        <div class="col-md-12" id="cabecalho">
+          <div class="col-md-6">
+            <h1>Incluir Participante</h1>
+          </div>
+          <div style="padding-top: 20px" class="col-md-6">
+             <a href="{{route('ajuda')}}#participante" target="_blank" style="float:right;" class="btn btn-default"> <span class="glyphicon glyphicon-question-sign"></span> </a>
+          </div>
+        </div>
         <br>
         {!! Form::open(['route'=>'pessoaconvenio.store', 'files' =>true])!!}
 

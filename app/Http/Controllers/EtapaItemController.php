@@ -37,27 +37,34 @@ class EtapaItemController extends Controller
 
     public function Editar($id)
     {
-        $etapaitem = \App\EtapaItem::where('id_etapa_item_aplic', $id)->get();
+        $etapaitem = \App\EtapaItem::where('id_etapa_item_aplic', $id)->first();
         //tratamento dados
-        $dt = date('d/m/Y', strtotime($etapaitem[0]['dt_aplicacao']));
-        $etapaitem[0] = $this->array_push_assoc($etapaitem[0], 'dt_aplicacao', $dt);
-        $vl = str_replace('.', ',', $etapaitem[0]['vl_item']);
-        $etapaitem[0] = $this->array_push_assoc($etapaitem[0], 'vl_item', $vl);
-        $vlt = str_replace('.', ',', $etapaitem[0]['vl_total_item']);
-        $etapaitem[0] = $this->array_push_assoc($etapaitem[0], 'vl_total_item', $vlt);
+        $etapaitem->dt_aplicacao = date('d/m/Y', strtotime($etapaitem->dt_aplicacao));
+        $etapaitem->vl_item = str_replace('.', ',', $etapaitem->vl_item);
+        $etapaitem->vl_total_item = str_replace('.', ',', $etapaitem->vl_total_item);
         // fim tratamento
-        $ep = \App\EtapaPlanodetrabalho::where('id_etapa_aplic', '=', $etapaitem[0]['id_etapa_aplic'])->get();
-        $pais = \App\Pais::where('id_pais', '=', $etapaitem[0]['id_pais'])->get();
-        $moeda = \App\Moeda::where('id_moeda', '=', $etapaitem[0]['id_moeda'])->get();
-        $cdd = \App\Despesas::where('cd_desp', '=', $etapaitem[0]['cd_desp'])
-            ->where('cd_tabela', '=', $etapaitem[0]['cd_tabela'])
-            ->get();
+        $ep = DB::TABLE('AC_ETAPA_APLIC')->where('id_etapa_aplic', '=', intval($etapaitem->id_etapa_aplic))->first();
+
+        $pais = \App\Pais::where('id_pais', '=', $etapaitem->id_pais)->first();
+        $moeda = \App\Moeda::where('id_moeda', '=', $etapaitem->id_moeda)->first();
+        $cdd = \App\Despesas::where('cd_desp', '=', $etapaitem->cd_desp)
+            ->where('cd_tabela', '=', $etapaitem->cd_tabela)
+            ->first();
         $e = \App\EtapaPlanodetrabalho::all();
         $p = \App\Pais::all()->sortBy('nm_pais');
         $m = \App\Moeda::all()->sortBy('ds_moeda');
         $d = \App\Despesas::all();
 
-        return view('etapaitem.Editar')->with('d', $d)->with('m', $m)->with('p', $p)->with('ept', $e)->with('despesa', $cdd)->with('moeda', $moeda)->with('pais', $pais)->with('etapaplanodetrabalho', $ep)->with('etapaitem', $etapaitem);
+        return view('etapaitem.Editar')
+        ->with('d', $d)
+        ->with('m', $m)
+        ->with('p', $p)
+        ->with('ept', $e)
+        ->with('despesa', $cdd)
+        ->with('moeda', $moeda)
+        ->with('pais', $pais)
+        ->with('etapaplanodetrabalho', $ep)
+        ->with('etapaitem', $etapaitem);
     }
 
     public function Deletar($id)

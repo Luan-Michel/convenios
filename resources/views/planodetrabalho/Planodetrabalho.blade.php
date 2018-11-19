@@ -11,7 +11,7 @@
           <h1>Plano de trabalho</h1>
         </div>
         <div style="padding-top: 20px" class="col-md-6">
-           <a href="{{route('ajuda')}}#convenio" target="_blank" style="float:right;" class="btn btn-default"> <span class="glyphicon glyphicon-question-sign"></span> </a>
+           <a href="{{route('ajuda')}}#plano_de_trabalho" target="_blank" style="float:right;" class="btn btn-default"> <span class="glyphicon glyphicon-question-sign"></span> </a>
         </div>
         <div class="col-md-12">
           <h3>@if(isset($conv)) Convênio: {{$conv->ds_sigla_objeto}} @else Geral @endif</h3>

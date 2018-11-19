@@ -29,7 +29,7 @@ class PessoaConvenioController extends Controller
                   ->JOIN('PESSOA..PESSOA_JURIDICA', 'AC_PARTICIPANTES.id_pessoa_instituição', '=', 'PESSOA..PESSOA_JURIDICA.id_pessoa')
                   ->JOIN('PESSOA..PESSOA', 'AC_PARTICIPANTES.id_pessoa_participante', '=', 'PESSOA..PESSOA.id_pessoa')
                   ->JOIN('AC_CONVENIO', 'AC_PARTICIPANTES.id_convenio', '=', 'AC_CONVENIO.id_convenio')
-                  ->SELECT('AC_PARTICIPANTES.*', 'AC_CONVENIO.ds_sigla_objeto', 'AC_CONVENIO.nr_convenio', 'PESSOA..PESSOA.nm_pessoa_abreviado', 'PESSOA..PESSOA_JURIDICA.nm_fantasia')
+                  ->SELECT('AC_PARTICIPANTES.*', 'AC_CONVENIO.ds_sigla_objeto', 'AC_CONVENIO.id_convenio', 'PESSOA..PESSOA.nm_pessoa_abreviado', 'PESSOA..PESSOA_JURIDICA.nm_fantasia')
                   ->get();
 
         return view('pessoaconvenio.PessoaConvenio')->with('pessoas', $pessoas);
@@ -85,11 +85,11 @@ class PessoaConvenioController extends Controller
     public
     function Editar($id_convenio, $id_pessoa)
     {
-        $p = \App\Participantes::where('nr_convenio', $id_convenio)->where('id_pessoa_participante', $id_pessoa)->get();
+        $p = \App\Participantes::where('id_convenio', $id_convenio)->where('id_pessoa_participante', $id_pessoa)->get();
 
         $pes = \App\Pessoa::where('id_pessoa', $p[0]['id_pessoa_participante'])->get();
         $ins = \App\PessoaJuridica::where('id_pessoa', $p[0]['id_pessoa_instituicao'])->get();
-        $con = \App\Convenio::where('nr_convenio', $p[0]['nr_convenio'])->get();
+        $con = \App\Convenio::where('id_convenio', $p[0]['id_convenio'])->get();
         $fin = \App\Financiador::where('id_financiador', $con[0]['id_financiador'])->get();
 
         $pj = \App\Pessoa::where('id_pessoa', $p[0]['id_pessoa_instituicao'])->get();

@@ -1,14 +1,19 @@
 @extends('app')
 @section('content')
     <div class="container">
-        <h1>Financiador</h1>
+        <div class="col-md-6">
+          <h1>Financiador</h1>
+        </div>
+        <div style="padding-top: 20px" class="col-md-6">
+           <a href="{{route('ajuda')}}#financiador" target="_blank" style="float:right;" class="btn btn-default"> <span class="glyphicon glyphicon-question-sign"></span> </a>
+        </div>
         @if($errors->any())
             <ul class="alert alert-warning">
                 @foreach($errors->all()as$error)
                     <li>{{ $error}}</li>
                 @endforeach
             </ul>
-    @endif
+        @endif
 
     {!! Form::open(['route'=>'financiador.store', 'id'=>'signupForm'])!!}
 
@@ -61,7 +66,7 @@
             <br>
             <label for="firstName" class="control-label">{{--<font color="#F0F0F0">.</font>--}}</label>
             <a href="<?php echo url('financiador'); ?>">
-                {!! Form::button('Voltar', ['class'=>'btn btn-primary'])!!}
+                {!! Form::button('Voltar', ['class'=>'btn btn-warning'])!!}
             </a>
         </div>
     </div>
