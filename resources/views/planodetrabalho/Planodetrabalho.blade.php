@@ -7,9 +7,15 @@
         </div>
     @endif
     <div class="container">
-
-        <h1>Plano de trabalho</h1>
-        <h3>@if(isset($conv)) Convênio: {{$conv->ds_sigla_objeto}} @else Geral @endif</h3>
+        <div class="col-md-6">
+          <h1>Plano de trabalho</h1>
+        </div>
+        <div style="padding-top: 20px" class="col-md-6">
+           <a href="{{route('ajuda')}}#convenio" target="_blank" style="float:right;" class="btn btn-default"> <span class="glyphicon glyphicon-question-sign"></span> </a>
+        </div>
+        <div class="col-md-12">
+          <h3>@if(isset($conv)) Convênio: {{$conv->ds_sigla_objeto}} @else Geral @endif</h3>
+        </div>
         <?php
         if(isset($conv)){
           $ano = $conv->ano_convenio;
@@ -26,7 +32,7 @@
           <a class="btn btn-success" href="{{ route('planodetrabalho.Cadastrar', [$ano,$nr,$f])}}" ><i class="glyphicon glyphicon-plus"></i>&nbsp;Novo</a>
         </div>
         @endif
-        <br><br>
+        <br><br><br>
         <div class="container">
             <br><br>
             <table class="table table-striped table-hover table-bordered" id="table">

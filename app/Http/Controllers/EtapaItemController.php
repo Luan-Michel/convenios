@@ -125,15 +125,9 @@ class EtapaItemController extends Controller
 
         $de = DB::TABLE('COMPRAS..DESPESA')
               ->WHERE('CD_DESP', $desp)
-              ->select('NM_DESP as text', 'CD_DESP as id', 'CD_TABELA')
-              ->get();
+              ->select('NM_DESP as text', 'CD_DESP as id')
+              ->first();
 
-        foreach ($de as $d) {
-          // code...
-          $d->text = $d->text."/".$d->CD_TABELA;
-          $d->id = $d->id."/".$d->CD_TABELA;
-          unset ($d->CD_TABELA);
-        }
         return response()->json($de);
     }
 
@@ -141,10 +135,13 @@ class EtapaItemController extends Controller
     {
         //$cd_tab = intval($cd_tab);
         //return response()->json($nm_desp);
+        $tab = DB::TABLE('COMPRAS..DESPESA')
+                    ->MAX('CD_TABELA');
+
         $nm_desp = "%".$nm_desp."%";
         $d = DB::TABLE('COMPRAS..DESPESA')
               ->WHERE('NM_DESP', 'LIKE', $nm_desp)
-              ->ORWHERE('CD_DESP', 'LIKE', $nm_desp)
+              ->WHERE('CD_TABELA', $tab)
               ->LIMIT(50)
               ->select('CD_DESP as id', 'NM_DESP as text')
               ->get();

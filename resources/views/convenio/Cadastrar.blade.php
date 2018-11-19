@@ -9,7 +9,14 @@
     @endif
 
     <div class="container">
-        <h1>Conv&ecircnio</h1>
+        <div class="col-md-12" id="cabecalho">
+          <div class="col-md-6">
+            <h1>Convênio</h1>
+          </div>
+          <div style="padding-top: 20px" class="col-md-6">
+             <a href="{{route('ajuda')}}#convenio" target="_blank" style="float:right;" class="btn btn-default"> <span class="glyphicon glyphicon-question-sign"></span> </a>
+          </div>
+        </div>
         <br>
         {!! Form::open(['route'=>'convenio.store', 'id'=>'signupForm', 'files' =>true])!!}
         <div class="col-md-6">
@@ -207,6 +214,7 @@
 @endsection
 @section('content_js')
     <script type="text/javascript">
+
         function testararquivo() {
             if (document.getElementById("anexo[]").value.length > 4) {
                 document.getElementById("addanexo").className = "col-md-2 addanexo";

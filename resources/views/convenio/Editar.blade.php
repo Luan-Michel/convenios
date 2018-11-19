@@ -1,7 +1,6 @@
 @extends('app')
 @section('content')
     <div class='container'>
-        <h1>Convênio {{--{{$financiador[0]['nm_financiador']}}--}}</h1>
         @if($errors->any())
             <ul class="alert alert-warning">
                 @foreach($errors->all() as $error)
@@ -10,6 +9,15 @@
             </ul>
         @endif
 
+        <div class="col-md-12" id="cabecalho">
+          <div class="col-md-6">
+            <h1>Convênio {{$convenio->ds_sigla_objeto}}</h1>
+          </div>
+          <div style="padding-top: 20px" class="col-md-6">
+             <a href="{{route('ajuda')}}#convenio" target="_blank" style="float:right;" class="btn btn-default"> <span class="glyphicon glyphicon-question-sign"></span> </a>
+          </div>
+        </div>
+        <br>
         {!! Form::open(['route'=>['convenio.atualizabanco', $convenio->ano_convenio,$convenio->nr_convenio,$convenio->id_financiador], 'method'=>'put', 'id'=> 'signupForm', 'files' =>true])!!}
         <div class="col-md-6">
             {!! Form::label('id_financiador','Financiador')!!}

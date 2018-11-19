@@ -206,6 +206,14 @@ Route::group(['middleware' => 'sgiauth'], function() {
         Route::get('visualizar', ['as' => 'agencia.Visualizar', 'uses' => 'AgenciaController@Index']);
     });
 
+    Route::group(['prefix'=>'diarias', 'where'=>['id'=>'[0-9]+']], function(){
+        Route::get('', ['as'=>'diarias', 'uses'=>'DiariasController@Index']);
+        Route::get('adicionar', ['as'=>'diarias.Cadastrar', 'uses'=>'DiariasController@create']);
+        Route::get('{id}/deletar', ['as'=>'diarias.Deletar', 'uses'=>'DiariasController@create']);
+        Route::post('store', ['as'=>'diarias.store', 'uses'=>'DiariasController@store']);
+        Route::get('{id}/editar', ['as'=>'diarias.Editar', 'uses'=>'DiariasController@create']);
+    });
+
     Route::group(['prefix'=>'ajuda', 'where'=>['id'=>'[0-9]+']], function(){
         Route::get('', ['as'=>'ajuda', 'uses'=>'AjudaController@Index']);
     });

@@ -96,7 +96,7 @@
             <label for="firstName" class="control-label"><font color="#F0F0F0">.</font></label>
             <br>
             <a href="{{ url('pessoaconvenio') }}">
-                {!! Form::button('Voltar', ['class'=>'btn btn-primary'])!!}
+                {!! Form::button('Voltar', ['class'=>'btn btn-warning'])!!}
             </a>
         </div>
 

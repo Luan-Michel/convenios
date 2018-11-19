@@ -9,16 +9,17 @@
 
     <div class='container'>
         <h1>Financiador</h1>
-        <div class="col-md-1" align="left">
-          <a href="<?php echo url('principal'); ?>">
-              {!! Form::button('Voltar', ['class'=>'btn btn-warning'])!!}
-          </a>
+        <div style="padding-bottom: 50px">
+          <div class="col-md-1" align="left">
+            <a href="<?php echo url('principal'); ?>">
+                {!! Form::button('Voltar', ['class'=>'btn btn-warning'])!!}
+            </a>
+          </div>
+          <div class="col-md-offset-10 col-md-1" align="left">
+              <a href="{{ route('financiador.Cadastrar')}}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i>&nbsp;Novo</a>
+          </div>
         </div>
-        <div class="col-md-offset-10 col-md-1" align="left">
-            <a href="{{ route('financiador.Cadastrar')}}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i>&nbsp;Novo</a>
-        </div>
-        <br />
-        <br />
+
         <table class="table table-striped table-hover table-bordered" id="table">
             <thead>
             <tr>

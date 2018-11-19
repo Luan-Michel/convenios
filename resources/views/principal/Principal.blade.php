@@ -40,6 +40,8 @@
                               color="#ffffff"> Etapa participantes</font></a></li>
               <li role="presentation"><a class="btn btn-primary" href="{{ url('etapaitem') }}"><font
                               color="#ffffff"> Etapa Item</font></a></li>
+              <li role="presentation"><a class="btn btn-primary" href="{{ url('diarias') }}"><font
+                              color="#ffffff"> Diárias</font></a></li>
               <li role="presentation"><a class="btn btn-primary" href="{{ url('ajuda') }}"><font
                               color="#ffffff"> Ajuda</font></a></li>
           </ul>

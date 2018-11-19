@@ -31,7 +31,7 @@
         </div>
 
         <div class="col-md-5">
-          {!! Form::label('cd_tabela','Nome da Despesa/Tabela')!!}
+          {!! Form::label('cd_tabela','Nome da Despesa')!!}
           <select class="form-control" name="nm_desp" id="nm_desp">
            <option value='0'>- Search user -</option>
           </select>
@@ -150,15 +150,11 @@
               success: function (data) {
                   swal.close(); //remove o swal de carregamento
                   console.log(data);
-                  if(data[0].text)
+                  if(data.text)
                   {
-                    for(var d = 0; d < data.length; d++){
-                      var item = data[d];
-                      var option = new Option(item .text, item .id, true, true);
-                      // Append it to the select
-                      $("#nm_desp").append(option);
-                    }
-                     $("#nm_desp").trigger('change');
+                    var option = new Option(data.text, data.id, true, true);
+                    $("#nm_desp").append(option);
+                    $("#nm_desp").trigger('change');
                   }else{
 
                   }

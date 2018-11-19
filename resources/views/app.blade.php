@@ -112,6 +112,7 @@ display: block;
                 <a href="{{ url('etapaplanodetrabalho') }}"> Etapa do plano de trabalho</a>
                 <a href="{{ url('etapaparticipantes') }}"> Etapa participantes</a>
                 <a href="{{ url('etapaitem') }}"> Etapa Item</a>
+                <a href="{{ url('diarias') }}"> Diárias</a>
                 <a href="{{ url('ajuda') }}"> Ajuda</a>
               </div>
             </div>
@@ -164,7 +165,7 @@ display: block;
 
 <footer class="_footer">
     <div class="container-fluid">
-        <p class="navbar-text">© 2015 - <a href="http://pitangui.uepg.br/nti" target="_blank">Núcleo de Tecnologia de
+        <p class="navbar-text">© 2018 - <a href="http://pitangui.uepg.br/nti" target="_blank">Núcleo de Tecnologia de
                 Informação - UEPG</a>
             <br>Problemas na visualização? <a href="mailto:internet@uepg.br" target="_top">internet@uepg.br</a></p>
         <div class="navbar-header navbar-right hidden-xs">

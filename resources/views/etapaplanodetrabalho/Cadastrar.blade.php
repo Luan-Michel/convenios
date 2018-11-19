@@ -103,7 +103,7 @@
         <div class="col-md-1">
             <label for="firstName" class="control-label"><font color="#F0F0F0">.</font></label>
             <a href="<?php echo url('etapaplanodetrabalho'); ?>">
-                {!! Form::button('Voltar', ['class'=>'btn btn-primary'])!!}
+                {!! Form::button('Voltar', ['class'=>'btn btn-warning'])!!}
             </a>
         </div>
         <br><br><br><br><br><br><br><br><br><br>

@@ -65,7 +65,6 @@ class FinanciadorController extends Controller
 
     public function atualizabanco(FinanciadorRequest $request, $id){
         $f = Financiador::find($id)->update($request->all());
-        dd($f);
         return redirect()->route('financiador');
     }
 
