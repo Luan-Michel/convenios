@@ -10,6 +10,8 @@ use App\Http\Requests\CategoriaconvenioRequest;
 use App\Categoriaconvenio;
 use Illuminate\Support\Facades\DB;
 
+use UxWeb\SweetAlert\SweetAlert;
+
 
 class CategoriaconvenioController extends Controller
 {
@@ -44,6 +46,7 @@ class CategoriaconvenioController extends Controller
 
   public function atualizabanco(CategoriaconvenioRequest $request, $id){
       $f = Categoriaconvenio::find($id)->update($request->all());
+      SweetAlert::success("Categoria atualizada com sucesso");
       return redirect()->route('categoriaconvenio');
   }
     // Não funciona, procurar erro, pro financiador roda, aqui da pau.
@@ -51,14 +54,19 @@ class CategoriaconvenioController extends Controller
          try {
              $categoria = \App\Categoriaconvenio::findOrFail($id);
              $categoria->delete($id);
+             SweetAlert::success("Categoria removida com sucesso");
              return redirect()->route('categoriaconvenio');
-         } catch (QueryException $e){}
-            return redirect()->route('categoriaconvenio')->with('message', 'Categoria não pode ser excluída por possuir convênio cadastrado.');
+         } catch (QueryException $e){
+
+           return redirect()->route('categoriaconvenio')->with('message', 'Categoria não pode ser excluída por possuir convênio cadastrado.');
+         }
+
         }
 
     public function store(CategoriaconvenioRequest $request){
       $input = $request->all();
       Categoriaconvenio::create($input);
+      SweetAlert::success("Categoria cadastrada com sucesso");
       return redirect()->route('categoriaconvenio');
   }
 

@@ -33,6 +33,10 @@
     {{--CKEditor--}}
     <script src="{{ asset('/ckeditor/ckeditor.js')}}"></script>
 
+    {{--select2 --}}
+    <link href="{{asset('select2-4.0.6-rc.1/dist/css/select2.min.css')}}" rel="stylesheet" />
+    <script src="{{asset('select2-4.0.6-rc.1/dist/js/select2.min.js')}}"></script>
+
     <style>
     /* Dropdown Button */
 .dropbtn {

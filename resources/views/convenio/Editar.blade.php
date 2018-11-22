@@ -172,7 +172,7 @@
                         </div>
                         <div class="col-md-2"   >
                             <br>
-                            <a class="btn btn-primary {{--pull-left--}}" href="#" onclick="window.open('/pdfs/{{$anexo['ds_titulo_anexo']}}', '_blank', 'fullscreen=yes'); return false;">
+                            <a class="btn btn-primary {{--pull-left--}}" href="#" onclick="window.open('/convenios/public/app/storage/uploads/{{$anexo['ds_titulo_anexo']}}', '_blank', 'fullscreen=yes'); return false;">
                                 <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
                             </a>
                         </div>

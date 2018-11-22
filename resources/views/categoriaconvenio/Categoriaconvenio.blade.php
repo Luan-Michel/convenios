@@ -47,7 +47,7 @@
                         </a>
                     </td>
                     <td align="center">
-                        <a href="{{ route('categoriaconvenio.Deletar',['id'=>$categoria->id_categoria])}}" class="btn-sm btn-danger">
+                        <a onclick="remove('{{ route('categoriaconvenio.Deletar',['id'=>$categoria->id_categoria])}}')" class="btn-sm btn-danger">
                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                         </a>
                     </td>
@@ -67,10 +67,14 @@
 
     </div>
 
+    @include('sweet::alert')
+
 @endsection
 
 @section('content_js')
-    <script> $("table").dataTable({
+    <script type="text/javascript">
+
+      $("table").dataTable({
             "language": {
                 "url": "/Portuguese.json",
                 "search":"Pesquisar",
@@ -82,5 +86,22 @@
                 },
                 "sEmptyTable":"Nenhum registro encontrado."
         }});
+
+        function remove(rota){
+
+          swal({
+            title: 'Você tem certeza que deseja excluir a categoria?',
+            text: "Esta ação não poderá ser desfeita.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+              window.location.href = rota;
+            }
+          });
+
+        }
     </script>
 @endsection

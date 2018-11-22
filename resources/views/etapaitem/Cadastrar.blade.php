@@ -39,7 +39,7 @@
 
         <div class="col-md-5">
           {!! Form::label('cd_tabela','Nome da Despesa')!!}
-          <select class="form-control" name="nm_desp" id="nm_desp">
+          <select class="form-control" onchaname="nm_desp" id="nm_desp">
            <option value='0'>- Search user -</option>
           </select>
         </div>
@@ -102,7 +102,7 @@
 
 
         {!! Form::close()!!}
-        
+
         <link href="{{asset('select2-4.0.6-rc.1/dist/css/select2.min.css')}}" rel="stylesheet" />
         <script src="{{asset('select2-4.0.6-rc.1/dist/js/select2.min.js')}}"></script>
 

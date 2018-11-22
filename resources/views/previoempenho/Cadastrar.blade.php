@@ -25,7 +25,7 @@
             {!! Form::label('nr_rpe','Número do prévio')!!}
             <input required readonly type="number" id="nr_rpe" min="1" name="nr_rpe" value="{{$nr_rpe}}" class="form-control"/>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             {!! Form::label('cd_tpcompra','Tipo compra')!!}
             <select required name="cd_tpcompra" id="cd_tpcompra" class="form-control">
                 <option value=""></option>
@@ -44,32 +44,12 @@
             </select>
         </div>
 
-        <div class="col-md-2">
-            {!! Form::label('ano_convenio','Ano do convênio')!!}
-            <select required id="ano_convenio"
-                    class="form-control change-event" min="2000" max="{{ date("Y") }}"  name="ano_convenio">
+        <div class="col-md-3">
+            {!! Form::label('id_convenio','Convênio')!!}
+            <select required id="id_convenio" class="form-control change-event" name="id_convenio">
                 <option value=""></option>
-                @foreach($ano_convenio as $aux)
-                    <option value='{{$aux->ano_convenio}}'>{{$aux->ano_convenio}}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-md-6"><br>
-            {!! Form::label('id_financiador','Financiador')!!}
-            <select required name="id_financiador" class="form-control margin-bottom-10 change-event" id="id_financiador">
-                <option value=""></option>
-                @foreach($financiador as $aux)
-                    <option value='{{$aux->id_financiador}}'>{{$aux->nm_financiador}}</option>
-                @endforeach
-            </select>
-        </div>
-        <!--Numero convenio Form input-->
-        <div class="col-md-2"> <br>
-            {!! Form::label('nr_convenio','Número do Convênio')!!}
-            <select required id="nr_convenio"  class="form-control change-event" name="nr_convenio">
-                <option value=""></option>
-                @foreach($nr_convenio as $aux)
-                    <option value='{{$aux->nr_convenio}}'>{{$aux->nr_convenio}}</option>
+                @foreach($convenio as $c)
+                    <option value='{{$c->id_convenio}}'>{{$c->ds_sigla_objeto}}</option>
                 @endforeach
             </select>
         </div>
@@ -81,17 +61,7 @@
             </select>
         </div>
 
-        <div class="col-md-2">
-            <br>
-            {!! Form::label('tp_beneficiario','Tipo beneficiário')!!}
-            <select required name="tp_beneficiario" class="form-control margin-bottom-10" id="tp_beneficiario">
-                <option value=""></option>
-                <option value="A">Acadêmico</option>
-                <option value="C">Convidado</option>
-                <option value="S">Servidor</option>
-            </select>
-        </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <br>
             {!! Form::label('id_pessoa','Nome beneficiário')!!}
             <select required name="id_pessoa" class="form-control margin-bottom-10" id="id_pessoa"
@@ -104,6 +74,7 @@
             {!! Form::label('seq_bancario','Conta corrente')!!}
             <select required id="seq_bancario" name="seq_bancario" class="form-control margin-bottom-10"></select>
         </div>
+
         <div class="col-md-3" id="dp1">
             <br>
             {!! Form::label('dt_rpe','Data do prévio')!!}
@@ -112,12 +83,12 @@
         <div class="col-md-2">
             <br>
             {!! Form::label('vl_previo_empenho','Valor do prévio')!!}
-            <input required type="number" id="vl_previo_empenho" name="vl_previo_empenho" min="1" class="form-control"/>
+            <input required type="text" data-mask="#.##0,00" data-mask-reverse="true" id="vl_previo_empenho" name="vl_previo_empenho" class="form-control"/>
         </div>
         <div class="col-md-4">
             <br>
             {!! Form::label('id_moeda','Moeda')!!}
-            <select required name="id_moeda" class="form-control margin-bottom-10" id="id_moeda">
+            <select required name="id_moeda" class="form-control margin-bottom-10 select2" id="id_moeda">
                 <option value=""></option>
                 @foreach($id_moeda as $aux)
                     <option value="{{$aux->id_moeda}}">{{$aux->ds_moeda}}</option>
@@ -136,25 +107,20 @@
 
         <!-- Textarea -->
         <div class="form-group">
-            <label class="col-md-12 control-label" for="textarea"><br>Objetivo do Prévio</label>
+            <label class="col-md-12 control-label" for="textarea"><br>Objetivo do Prévio Empenho</label>
             <div class="col-md-12">
-                <textarea class="form-control" required type="text" id="ds_objetivo" name="ds_objetivo"></textarea>
+                <textarea class="form-control" required rows="3" maxlength="250" type="text" id="ds_objetivo" name="ds_objetivo"></textarea>
             </div>
         </div>
 
         <!--Bot�o-->
-        <div class="col-md-2">
+        <!--<div class="col-md-2">
             <br><br>
             {{--<label for="firstName" class="control-label"></label>--}}
             <a id="btn_cc" value="contacorrente">
                 {!! Form::button ('Conta Corrente', ['class'=>'btn btn-warning'])!!}
             </a>
-        </div>
-        <div class="col-md-6" >
-            {{--espaçamento entre botoões conta corrente e salvar--}}
-            <br><br>
-            {{--<label for="firstName" class="control-label"></label>--}}
-        </div>
+        </div>-->
         <div class="col-md-2">
             <br><br>
             {{--<label for="firstName" class="control-label"></label>--}}
@@ -170,27 +136,33 @@
             </a>
         </div>
     </div>
+
 @endsection
 
 @section('content_js')
-    <script      type="text/javascript">
+    <script type="text/javascript">
         //Ajax Etapa Aplicação
         $('.change-event').change(function (event) {
             event.preventDefault();
             var csrf_token = $('input[name="_token"]').val();
-            var nr_convenio = $('#nr_convenio option:selected').val();
-            var ano_convenio = $('#ano_convenio option:selected').val();
-            var id_financiador = $('#id_financiador option:selected').val();
+            var id_convenio = $('#id_convenio option:selected').val();
             $('#id_etapa_aplic').empty();
             $('#id_pessoa').empty();
             $('#seq_bancario').empty();
             $.ajax({
                 method: 'POST',
                 url: '{{url("previoempenho/ajaxEtapaAplic")}}',
-                data: {_token: csrf_token, nr_convenio: nr_convenio, ano_convenio: ano_convenio,
-                    id_financiador: id_financiador},
-                dataType:"json"
+                data: {_token: csrf_token, id_convenio: id_convenio},
+                dataType:"json",
+                beforeSend: function(){
+                  swal({
+                      title: 'Carregando!',
+                      icon: '{{asset("images/Loading_icon.gif")}}',
+                      buttons: false,
+                  });
+                },
             }).done(function (response) {
+                swal.close(); //remove o swal de carregamento
                 $('#id_etapa_aplic').empty();
                 $('#id_etapa_aplic').append('<option value="">' + '' +  '</option>');
                 $(response).each(function (num_objeto, objeto) {
@@ -207,6 +179,12 @@
 
 
     <script type="text/javascript">
+
+        // In your Javascript (external .js resource or <script> tag)
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
+
         //Ajax beneficiario
         function populapessoa() {
             //event.preventDefault();
@@ -219,8 +197,16 @@
                 method: 'POST',
                 url: '{{url("previoempenho/ajaxBeneficiario")}}',
                 data: {_token: csrf_token, id_etapa_aplic: id_etapa_aplic},
-                dataType:"json"
+                dataType:"json",
+                beforeSend: function(){
+                  swal({
+                      title: 'Carregando!',
+                      icon: '{{asset("images/Loading_icon.gif")}}',
+                      buttons: false,
+                  });
+                },
             }).done(function (response) {
+                swal.close(); //remove o swal de carregamento
                 $('#id_pessoa').empty();
                 $('#id_pessoa').append('<option value="">'+''+'</option>');
                 $(response).each(function (num_objeto, objeto) {
@@ -256,7 +242,15 @@
                 url: '{{url("previoempenho/ajaxConta")}}',
                 data: {_token: csrf_token, id_pessoa: id_pessoa},
                 dataType:"json",
+                beforeSend: function(){
+                  swal({
+                      title: 'Carregando!',
+                      icon: '{{asset("images/Loading_icon.gif")}}',
+                      buttons: false,
+                  });
+                },
             }).done(function (response) {
+                swal.close(); //remove o swal de carregamento
                 $('#seq_bancario').empty();
                 $('#seq_bancario').append('<option value="">' + '' +  '</option>');
 
@@ -271,7 +265,7 @@
     </script>
 
     <script type="text/javascript">
-        CKEDITOR.replace( 'ds_objetivo' );
+        //CKEDITOR.replace( 'ds_objetivo' );
     </script>
 
 @endsection

@@ -513,7 +513,7 @@ class ConvenioController extends Controller
             $token = $request->_token;
             $financiador = $request->id_financiador;
             $anoconvenio = $request->ano_convenio;
-            $nrconvenio = $request->nr_convenio;
+            $nrconvenio = $request->id_convenio;
             $ac_anexo = array();
             $vetor[] = array();
             foreach ($anexo as $key => $value) {
@@ -556,6 +556,7 @@ class ConvenioController extends Controller
         try{
             $anexo = DB::TABLE('AC_ANEXOS')->where('id_convenio', $id_convenio)->delete();
             $convenio = DB::TABLE('AC_CONVENIO')->where('id_convenio', $id_convenio)->delete();
+            SweetAlert::success('Convênio excluido com sucesso!');
         } catch (\Illuminate\Database\QueryException $ex) {
             \Session::flash('message_delete', 'Convênio não pode ser excluído por dependência.');
         }

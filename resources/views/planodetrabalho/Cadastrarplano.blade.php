@@ -44,7 +44,7 @@
             <!--Sequencia meta aplicativo Form input-->
             <div class="col-md-6">
                 {!! Form::label('seq_meta_aplic','Sequência meta aplicação')!!}
-                {!! Form::number('seq_meta_aplic', null, ['class'=>'form-control', 'min'=>'0'])!!}
+                {!! Form::number('seq_meta_aplic', $seq, ['class'=>'form-control', 'min'=>'0', 'readonly'])!!}
             </div>
             <!--Titulo convenio Form input-->
             <div class="col-md-6">

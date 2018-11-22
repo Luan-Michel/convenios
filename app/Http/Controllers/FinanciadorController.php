@@ -11,6 +11,7 @@ use App\Http\Requests\FinanciadorRequest;
 use App\Financiador;
 use Illuminate\Support\Facades\DB;
 
+use UxWeb\SweetAlert\SweetAlert;
 
 class FinanciadorController extends Controller
 {
@@ -65,6 +66,7 @@ class FinanciadorController extends Controller
 
     public function atualizabanco(FinanciadorRequest $request, $id){
         $f = Financiador::find($id)->update($request->all());
+        SweetAlert::success("Financiador atualizado com sucesso");
         return redirect()->route('financiador');
     }
 
@@ -89,6 +91,7 @@ class FinanciadorController extends Controller
         // var_dump($input);
         //  die();
         Financiador::create($input);
+        SweetAlert::success("Financiador cadastrado com sucesso");
         return redirect()->route('financiador');
     }
 

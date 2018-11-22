@@ -165,8 +165,6 @@ Route::group(['middleware' => 'sgiauth'], function() {
         Route::post('ajaxEtapaAplic', 'PrevioEmpenhoController@ajaxEtapaAplic');
         Route::post('ajaxConta', 'PrevioEmpenhoController@ajaxConta');
         Route::post('{id}/ajaxDelete', ['as'=>'previoempenho.ajaxDelete', 'uses'=>'PrevioEmpenhoController@ajaxDelete']);
-
-
     });
 
 

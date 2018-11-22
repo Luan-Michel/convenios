@@ -39,22 +39,12 @@
                         <td>{{$previoempenho->nr_rpe}}</td>
                         <td>{{$previoempenho->id_pessoa}}</td>
                         <td align="center">
-                            <a href="{{ route('previoempenho.Editar',['nr'=>$previoempenho->nr_rpe])}}"
-                               class="btn-sm btn-default glyphicon glyphicon-pencil"></a>
+                            <a href="{{ route('previoempenho.Editar',['id_rpe'=>$previoempenho->id_rpe])}}" class="btn-sm btn-default"> <span class="glyphicon glyphicon-pencil"/></a>
                         </td>
                         <td align="center">
-                            {!! Form::open(['method'=>'get', 'route'=>['pessoaconvenio.ajaxDelete', $previoempenho->nr_rpe]]) !!}
-                            <div class="btn-group">
-
-                                <button type="button" class="delete btn-sm btn-danger glyphicon glyphicon-trash"
-                                        data-toggle="modal"
-                                        data-previo_token="{{ csrf_token() }}"
-                                        data-previo_nr_rpe="{{$previoempenho->nr_rpe}}"
-                                        data-previo_route="{{route('previoempenho.ajaxDelete', $previoempenho->nr_rpe)}}">
-                                </button>
-                                {!! Form::close() !!}
-
-                            </div>
+                                <a onclick="remove('{{ route('previoempenho.Deletar',['id_rpe'=>$previoempenho->id_rpe])}}')" class="btn-sm btn-danger">
+                                  <span class="glyphicon glyphicon-trash"></span>
+                                </a>
                         </td>
                     </tr>
                 @endforeach
@@ -70,9 +60,11 @@
             <a href="{{ route('previoempenho.Cadastrar')}}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i>&nbsp;Novo</a>
         </div>
     </div>
+    @include('sweet::alert')
 @endsection
 @section('content_js')
-    <script> $("table").dataTable({
+    <script>
+      $("table").dataTable({
             "language": {
                 "url": "/Portuguese.json",
                 "search":"Pesquisar",
@@ -85,40 +77,28 @@
                 "sEmptyTable":"Nenhum registro encontrado."
             }
         });
-    </script>
 
-    <script>
-        $('button.delete').click(function()        {
-            var rota = $(this).attr("data-previo_route");
-            var nr_rpe = $(this).attr("data-previo_nr_rpe");
-            var Token = $(this).attr("data-previo_token");
+        </script>
 
-            swal({
-                title:"Tem certeza?",
-                text: "Você não será capaz de recuperar esse cadastro.",
-                imageUrl: "{{asset('images/question.jpg')}}",
-                showCancelButton: true,
-                cancelButtonText: "Cancelar",
-                cancelButtonColor: "#DD6B55",
-                confirmButtonColor: "#5cb85c",
-                confirmButtonText: "Confirmar",
-                closeOnConfirm: true
-            }, function (isConfirm) {
-                if (!isConfirm) return;
-                $.ajax({
-                    type: "post",
-                    url: rota,
-                    data: {'X-CSRF-TOKEN': Token, nr_rpe:nr_rpe}
-                }).done(function (data) {
-                    console.log(data);
-                    swal("Previo empenho número ", nr_rpe + " deletado com sucesso.", "success");
-                    location.reload();
-                }).error(function (data) {
-                    console.log(data);
-                    swal("Oops", "O previo empenho "+ nr_rpe +" não pode ser deletado", "error");
-                });
+        <script type="text/javascript">
 
-            });
-        });
+        function remove(rota){
+
+          swal({
+            title: 'Você tem certeza que deseja excluir o Prévio Empenho?',
+            text: "Esta ação não poderá ser desfeita.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+              window.location.href = rota;
+            }
+          });
+
+        }
+
+
     </script>
 @endsection

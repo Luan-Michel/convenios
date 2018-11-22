@@ -16,6 +16,8 @@ use App\Despesas;
 use App\Participantes;
 use App\Pessoa;
 
+use DB;
+
 class EtapaParticipantesController extends Controller
 {
     public function Index()
@@ -101,12 +103,25 @@ class EtapaParticipantesController extends Controller
     public function store(EtapaParticipantesRequest $request)
     {
         $input = $request->all();
+
         $retorno_pessoa_participante = explode('|', $input['id_pessoa_participante']);
         $input = $this->array_push_assoc($input, 'id_pessoa_participante', $retorno_pessoa_participante[0]);
         $input = $this->array_push_assoc($input, 'id_financiador', $retorno_pessoa_participante[1]);
         $input = $this->array_push_assoc($input, 'ano_convenio', $retorno_pessoa_participante[2]);
         $input = $this->array_push_assoc($input, 'nr_convenio', $retorno_pessoa_participante[3]);
-        EtapaParticipante::create($input);
+
+        $c = DB::TABLE('AC_CONVENIO')
+              ->where('id_financiador', intval($retorno_pessoa_participante[1]))
+              ->where('ano_convenio', intval($retorno_pessoa_participante[2]))
+              ->where('nr_convenio', intval($retorno_pessoa_participante[3]))
+              ->first();
+
+        $i['id_pessoa_participante'] = $input['id_pessoa_participante'];
+        $i['id_etapa_aplic'] = $input['id_etapa_aplic'];
+        $i['id_convenio'] = $c->id_convenio;
+
+
+        DB::TABLE('AC_ETAPA_PARTICIPANTES')->INSERT($i);
         return redirect()->route('etapaitem');
     }
 

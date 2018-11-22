@@ -104,15 +104,19 @@ class EtapaItemController extends Controller
     {
         $input = $request->all();
 
+        $de = DB::TABLE('COMPRAS..DESPESA')
+              ->WHERE('CD_DESP', intval($input['cd_desp']))
+              ->select('cd_tabela')
+              ->orderBy('cd_tabela', 'desc')
+              ->first();
+
+        $input['cd_tabela'] = intval($de->cd_tabela);
         //tratamentodados
-        $retorno_cd_tabela_desp = explode('|', $input['cd_tabela']);
         $retorno_dt_aplicacao = explode('/', $input['dt_aplicacao']);
         $valoritem = str_replace(".", "", $input['vl_item']);
         $valoritem = str_replace(",", ".", $valoritem);
         $valortotalitem = str_replace(".", "", $input['vl_total_item']);
         $valortotalitem = str_replace(",", ".", $valortotalitem);
-        $input = $this->array_push_assoc($input, 'cd_tabela', $retorno_cd_tabela_desp[0]);
-        $input = $this->array_push_assoc($input, 'cd_desp', $retorno_cd_tabela_desp[1]);
         $input = $this->array_push_assoc($input, 'dt_aplicacao', $retorno_dt_aplicacao[2] . "-" . $retorno_dt_aplicacao[1] . "-" . $retorno_dt_aplicacao[0] . " 00:00:00");
         $input = $this->array_push_assoc($input, 'vl_item', $valoritem);
         $input = $this->array_push_assoc($input, 'vl_total_item', $valortotalitem);

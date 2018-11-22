@@ -9,6 +9,8 @@ use App\Http\Requests;
 use App\Http\Requests\PlanodetrabalhoRequest;
 use App\Planodetrabalho;
 
+use DB;
+
 class PlanodetrabalhoController extends Controller
 {
     public function Index($ano_conv, $nr_conv, $f)
@@ -35,6 +37,7 @@ class PlanodetrabalhoController extends Controller
     {
         $financiador = \App\Financiador::all(['nm_financiador', 'id_financiador']);
         $convenio = \App\Convenio::all(['nr_convenio', 'ano_convenio']);
+        $seq = intval(DB::TABLE('AC_META_APLIC')->MAX('seq_meta_aplic'))+1;
 
         //usado quando cria um convenio e é direcionado direto para o plano de trabalho
         $conv_financiador=null;
@@ -44,6 +47,7 @@ class PlanodetrabalhoController extends Controller
         $fin = \App\Financiador::where('id_financiador', $f)->get();
         return view('planodetrabalho.Cadastrarplano')
             ->with('fin', $fin)
+            ->with('seq', $seq)
             ->with('conv', $nr_conv)
             ->with('ano', $ano_conv)
             ->with('financiador', $financiador)
@@ -114,20 +118,37 @@ class PlanodetrabalhoController extends Controller
         return redirect()->route('planodetrabalho');
     }
 
-    public function store(PlanodetrabalhoRequest $request)
+    public function store(Request $request)
     {
         $input = $request->all();
         //faz-se a divisão das datas
+
         $retorno_dt_inicio = explode('/', $request->dt_inicio_meta);
         $retorno_dt_termino = explode('/', $request->dt_termino_meta);
-        $input = $this->array_push_assoc($input, 'id_convenio', $retorno[0]);
+        $retorno = explode('/', $input['nr_convenio']);
+
+        $c = DB::TABLE('AC_CONVENIO')->where('nr_convenio', intval($retorno[0]))->where('ano_convenio', intval($retorno[1]))->first();
+        $input['id_convenio'] = $c->id_convenio;
         //atribui ao objeto os valores de dt_inicio e dt_termino
         $input = $this->array_push_assoc($input, 'dt_inicio_meta', $retorno_dt_inicio[2] . "-" . $retorno_dt_inicio[1] . "-" . $retorno_dt_inicio[0]);
         $input = $this->array_push_assoc($input, 'dt_termino_meta', $retorno_dt_termino[2] . "-" . $retorno_dt_termino[1] . "-" . $retorno_dt_termino[0]);
         //***fim tratamento dados***
         //dd($input);
-        Planodetrabalho::create($input);
-        return redirect()->route('etapaplanodetrabalho');
+        $i['id_convenio'] = intval($input['id_convenio']);
+        $i['seq_meta_aplic'] = intval(DB::TABLE('AC_META_APLIC')->MAX('seq_meta_aplic'))+1;
+        $i['ds_titulo_meta_aplic'] = $input['ds_titulo_meta_aplic'];
+        $i['ds_meta_aplic'] = $input['ds_meta_aplic'];
+        $i['dt_inicio_meta'] = $input['dt_inicio_meta'];
+        $i['dt_termino_meta'] = $input['dt_termino_meta'];
+
+        try {
+          DB::TABLE('AC_META_APLIC')->insert($i);
+
+          return redirect()->route('etapaplanodetrabalho');
+        } catch (\Exception $e) {
+
+        }
+
     }
 
     public function array_push_assoc($array, $key, $value)
