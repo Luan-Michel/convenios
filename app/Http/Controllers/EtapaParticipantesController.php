@@ -154,9 +154,16 @@ class EtapaParticipantesController extends Controller
     {
 //      dd($id);
         $ep = \App\EtapaParticipante::where('id_etapa_participante', $id);
-        $ep->delete();
-        SweetAlert::success("Participante removido com sucesso da etapa.");
-        return redirect()->route('etapaparticipantes');
+
+        try {
+          $ep->delete();
+          SweetAlert::success("Participante removido com sucesso da etapa.");
+          return redirect()->route('etapaparticipantes');
+        } catch (\Illuminate\Database\QueryException $e) {
+          SweetAlert::error("Participante ão pode ser removido devido a dependência.");
+          return redirect()->back();
+        }
+
     }
 
     public function MissingMethod($params = array())

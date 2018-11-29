@@ -61,9 +61,14 @@ class EtapaItemController extends Controller
     public function Deletar($id)
     {
         $etapaitem = \App\EtapaItem::where('id_etapa_item_aplic', $id);
-        $etapaitem->delete();
-        \Session::flash('flash_message', 'Etapa Item deletada com sucesso');
-        return redirect()->route('etapaitem');
+        try {
+          $etapaitem->delete();
+          SweetAlert::success("Item removido com sucesso.");
+          return redirect()->route('etapaitem');
+        } catch (\Illuminate\Database\QueryException $e) {
+          SweetAlert::error("Item não pode ser removido devido a dependência.");
+          return redirect()->back();
+        }
     }
 
     public function atualizabanco(ItemRequest $request, $id)

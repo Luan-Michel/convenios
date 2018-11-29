@@ -58,9 +58,8 @@
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </a></td>
                         <td align="center">
-                            <a href="{{ route('planodetrabalho.Deletar',['id'=>$planodetrabalho->id_aplicacao])}}" class="btn-sm btn-danger ">
+                            <a onclick="remove('{{ route('planodetrabalho.Deletar',['id'=>$planodetrabalho->id_aplicacao])}}')" class="btn-sm btn-danger ">
                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-
                             </a>
                         {{--<a href="planodetrabalho/{{$planodetrabalho->id_aplicacao}}/visualizar" class="btn-sm btn-primary">Visualizar</a>--}}
                         <!-- <a href="{{ route('planodetrabalho.Visualizar',['id'=>$planodetrabalho->id_aplicacao])}}" class="btn-sm btn-primary">Visualizar</a> -->
@@ -84,10 +83,30 @@
     </div>
 
 
+    @include('sweet::alert')
 @endsection
 
 @section('content_js')
-    <script> $("table").dataTable({
+    <script type="text/javascript">
+
+    function remove(rota){
+
+          swal({
+            title: 'Você tem certeza que deseja excluir o Plano de Trabalho?',
+            text: "Esta ação não poderá ser desfeita.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+              window.location.href = rota;
+            }
+          });
+
+        }
+
+        $("table").dataTable({
             "language": {
                 "url": "/Portuguese.json",
                 "search":"Pesquisar",

@@ -224,8 +224,9 @@ class DiariasController extends Controller
           DB::TABLE('AC_RPE_DIARIA')->WHERE('id_rpe', $id)->delete();
           SweetAlert::success("Diária excluida com sucesso");
           return redirect('diarias');
-        } catch (\QueryException $e) {
-          return redirect()->back()->withErrors(["Houve um erro, a diária já foi utilizada e não pode ser excluida"]);
+        } catch (\Illuminate\Database\QueryException $e) {
+          SweetAlert::error("Diária não pode ser removido devido a dependência.");
+          return redirect()->back();
         }
     }
 }

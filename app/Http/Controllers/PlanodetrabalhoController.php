@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Requests\PlanodetrabalhoRequest;
 use App\Planodetrabalho;
-
+use UxWeb\SweetAlert\SweetAlert;
 use DB;
 
 class PlanodetrabalhoController extends Controller
@@ -96,9 +96,16 @@ class PlanodetrabalhoController extends Controller
     public function Deletar($id)
     {
         $planodetrabalho = \App\Planodetrabalho::findOrFail($id);
-        $planodetrabalho->delete($id);
         // Session::flash('flash_message', 'Financiador deletado com sucesso');
-        return redirect()->route('planodetrabalho');
+        try {
+          $planodetrabalho->delete($id);
+          return redirect()->route('planodetrabalho');
+          SweetAlert::success("Plano removido com sucesso");
+        } catch (\Illuminate\Database\QueryException $e) {
+          SweetAlert::error("Plano não pode ser removido devido a dependência.");
+          return redirect()->back();
+        }
+
     }
 
     public function store(Request $request)

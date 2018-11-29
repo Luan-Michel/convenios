@@ -12,6 +12,7 @@ use App\Planodetrabalho;
 use App\EtapaPlanodetrabalho;
 use App\Contabilcontasplano;
 use App\Despesas;
+use UxWeb\SweetAlert\SweetAlert;
 use DB;
 
 class EtapaPlanodetrabalhoController extends Controller
@@ -143,9 +144,14 @@ class EtapaPlanodetrabalhoController extends Controller
     public function Deletar($id)
     {
         $ept = \App\EtapaPlanodetrabalho::where('id_etapa_aplic', $id);
-        $ept->delete();
-        \Session::flash('flash_message', 'Etapa Plano de trabalho deletado com sucesso');
-        return redirect()->route('etapaplanodetrabalho');
+        try {
+          $ept->delete();
+          return redirect()->route('etapaplanodetrabalho');
+          SweetAlert::success("Etapa do Plano de Trabalho removida com sucesso");
+        } catch (\Illuminate\Database\QueryException $e) {
+          SweetAlert::error("Etapa não pode ser removida devido a dependência.");
+          return redirect()->back();
+        }
     }
 
     public function MissingMethod($params = array())
