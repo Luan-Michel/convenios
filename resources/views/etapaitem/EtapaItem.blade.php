@@ -20,7 +20,7 @@
         <div class="col-md-offset-10 col-md-1" align="left">
             <a href="{{ route('etapaitem.Cadastrar')}}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i>&nbsp;Novo</a>
         </div>
-
+        <br><br><br>
         <br><br><br>
         <table class="table table-striped table-hover table-bordered" id="table">
           <thead>
@@ -43,7 +43,7 @@
                     </a>
                       </td>
                   <td align="center">
-                    <a href="{{ route('etapaitem.Deletar',['id'=>$etapaitem->id_etapa_item_aplic])}}" class="btn-sm btn-danger">
+                    <a onclick="remove('{{ route('etapaitem.Deletar',['id'=>$etapaitem->id_etapa_item_aplic])}}')" class="btn-sm btn-danger">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 
                     </a>
@@ -64,10 +64,31 @@
             <a href="{{ route('etapaitem.Cadastrar')}}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i>&nbsp;Novo</a>
         </div>
     </div>
+
+
+    @include('sweet::alert')
+
 @endsection
 
 @section('content_js')
-  <script> $("table").dataTable({
+  <script type="text/javascript">
+
+    function remove(rota){
+        swal({
+          title: 'Você tem certeza que deseja excluir o item?',
+          text: "Esta ação não poderá ser desfeita.",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            window.location.href = rota;
+          }
+        });
+    }
+
+    $("table").dataTable({
       "language": {
           "url": "/Portuguese.json",
           "search":"Pesquisar",

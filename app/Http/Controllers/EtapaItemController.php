@@ -12,6 +12,7 @@ use App\EtapaPlanodetrabalho;
 use App\Contabilcontasplano;
 use App\Despesas;
 use App\EtapaItem;
+use UxWeb\SweetAlert\SweetAlert;
 use DB;
 
 class EtapaItemController extends Controller
@@ -59,10 +60,6 @@ class EtapaItemController extends Controller
 
     public function Deletar($id)
     {
-        $ept = \App\EtapaPlanodetrabalho::all();
-        $p = \App\Pais::all()->sortBy('nm_pais');
-        $m = \App\Moeda::all()->sortBy('ds_moeda');
-        $d = \App\Despesas::all();
         $etapaitem = \App\EtapaItem::where('id_etapa_item_aplic', $id);
         $etapaitem->delete();
         \Session::flash('flash_message', 'Etapa Item deletada com sucesso');
@@ -72,20 +69,33 @@ class EtapaItemController extends Controller
     public function atualizabanco(ItemRequest $request, $id)
     {
         $input = $request->all();
-        $retorno_cd_tabela_desp = explode('|', $input['cd_tabela']);
+
+        $item = DB::TABLE('AC_ETAPA_ITEM_APLIC')->WHERE('id_etapa_item_aplic', $id)->first();
+
+        if($item->cd_desp == $input['cd_desp']){
+            $input['cd_tabela'] = $item->cd_tabela;
+        }else{
+            $de = DB::TABLE('COMPRAS..DESPESA')
+                  ->WHERE('CD_DESP', intval($input['cd_desp']))
+                  ->select('cd_tabela')
+                  ->orderBy('cd_tabela', 'desc')
+                  ->first();
+
+            $input['cd_tabela'] = intval($de->cd_tabela);
+        }
+
         $retorno_dt_aplicacao = explode('/', $input['dt_aplicacao']);
         $valoritem = str_replace(".", "", $input['vl_item']);
         $valoritem = str_replace(",", ".", $valoritem);
         $valortotalitem = str_replace(".", "", $input['vl_total_item']);
         $valortotalitem = str_replace(",", ".", $valortotalitem);
-        $input = $this->array_push_assoc($input, 'cd_tabela', $retorno_cd_tabela_desp[0]);
-        $input = $this->array_push_assoc($input, 'cd_desp', $retorno_cd_tabela_desp[1]);
         $input = $this->array_push_assoc($input, 'dt_aplicacao', $retorno_dt_aplicacao[2] . "-" . $retorno_dt_aplicacao[1] . "-" . $retorno_dt_aplicacao[0] . " 00:00:00");
         $input = $this->array_push_assoc($input, 'vl_item', $valoritem);
         $input = $this->array_push_assoc($input, 'vl_total_item', $valortotalitem);
         unset($input['_token']);
         unset($input['_method']);
         $f = EtapaItem::find($id)->update($input);
+        SweetAlert::success("Item atualizado com sucesso");
         return redirect()->route('etapaitem');
     }
 
@@ -111,6 +121,7 @@ class EtapaItemController extends Controller
         $input = $this->array_push_assoc($input, 'vl_item', $valoritem);
         $input = $this->array_push_assoc($input, 'vl_total_item', $valortotalitem);
         //endtratamentodados
+        SweetAlert::success("Item cadastrado com sucesso");
         EtapaItem::create($input);
         return redirect()->route('etapaitem');
     }

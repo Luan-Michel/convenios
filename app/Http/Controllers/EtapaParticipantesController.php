@@ -118,7 +118,7 @@ class EtapaParticipantesController extends Controller
         ->WHERE('id_etapa_participante', $id)
         ->UPDATE(['id_pessoa_participante' => $input['id_pessoa_participante']]);
         SweetAlert::success("Participante atualizado com sucesso na etapa.");
-        return redirect()->route('etapaitem');
+        return redirect()->route('etapaparticipantes');
       } catch (\Exception $e) {
         return redirect()->back()->withInput($input)->withErrors(["Houve um erro, tente novamente ou contate o NTI."]);
       }
@@ -152,7 +152,7 @@ class EtapaParticipantesController extends Controller
 
     public function Deletar($id)
     {
-//        dd($id);
+//      dd($id);
         $ep = \App\EtapaParticipante::where('id_etapa_participante', $id);
         $ep->delete();
         SweetAlert::success("Participante removido com sucesso da etapa.");
