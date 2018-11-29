@@ -1,17 +1,5 @@
 @extends('app')
-        <!doctype html>
-<html lang="pt_br">
-  <meta charset="UTF-8">
-  <head>
-      <style>
-          .menu-h li {
-              display: inline;
-              padding-right: 20px;
-          }
-      </style>
-  </head>
-  <body>
-    @section('content')
+@section('content')
     {{--<h1>DIPROC - Controle de Convênios </h1>--}}
     <br>
     <div class="col-md-2">
