@@ -33,7 +33,7 @@
     <div class="col-md-8">
         {!! Form::label('cd_tabela','Despesas')!!}
         <select  required name="cd_tabela" class="form-control margin-bottom-10" id="cd_tabela">
-            <option value="{{$despesas[0]['CD_DESP']}}|{{$despesas[0]['CD_TABELA']}}">{{$despesas[0]['CD_DESP']}} - {{$despesas[0]['NM_DESP']}}</option>
+            <option selected value="{{$despesas[0]['CD_DESP']}}|{{$despesas[0]['CD_TABELA']}}">{{$despesas[0]['CD_DESP']}} - {{$despesas[0]['NM_DESP']}}</option>
             @foreach($d as $d)
                 <option value="{{$d->CD_DESP}}|{{$d->CD_TABELA}}">{{$d->CD_DESP}} - {{$d->NM_DESP}}</option>
             @endforeach
@@ -42,7 +42,7 @@
     <div class="col-md-2">
         {!! Form::label('idcontas_plano','CDRED')!!}
         <select required name="idcontas_plano" class="form-control margin-bottom-10" id="idcontas_plano">
-            <option value="{{$contabil[0]['idcontas_plano']}}">{{$contabil[0]['cdred']}}</option>
+            <option selected value="{{$contabil[0]['idcontas_plano']}}">{{$contabil[0]['cdred']}}</option>
             @foreach($c as $c)
                 <option value="{{$c->idcontas_plano}}">{{$c->cdred}}</option>
             @endforeach
@@ -72,19 +72,16 @@
     </div>
     <div class="col-md-3">
         {!! Form::label('ds_unidade_medida','Unidade Medida')!!}
-        <input id="ds_unidade_medida" name="ds_unidade_medida" class="form-control margin-bottom-10" value="{{$etapaplanodetrabalho[0]['ds_unidade_medida']}}"
-               >
+        <input id="ds_unidade_medida" name="ds_unidade_medida" class="form-control margin-bottom-10" value="{{$etapaplanodetrabalho[0]['ds_unidade_medida']}}">
     </div>
     <div class="col-md-3">
         {!! Form::label('qt_unidade_etapa','Quantidade Unidade')!!}
-        <input class="form-control margin-bottom-10" value="{{$etapaplanodetrabalho[0]['qt_unidade_etapa']}}"
-               >
+        <input class="form-control margin-bottom-10" value="{{$etapaplanodetrabalho[0]['qt_unidade_etapa']}}">
     </div>
     <br>
     <div class="col-md-3">
         {!! Form::label('vl_total_etapa','Valor Total')!!}
-        <input required class="form-control margin-bottom-10" data-mask="#.##0,00" data-mask-reverse="true" id="vl_total_etapa" name="vl_total_etapa" value="{{$etapaplanodetrabalho[0]['vl_total_etapa']}}"
-               >
+        <input required class="form-control margin-bottom-10" data-mask="#.##0,00" data-mask-reverse="true" id="vl_total_etapa" name="vl_total_etapa" value="{{$etapaplanodetrabalho[0]['vl_total_etapa']}}">
     </div>
     <div class="col-md-3">
         {!! Form::label('vl_reservado','Valor Reservado')!!}

@@ -26,20 +26,9 @@
             <!--Convênio-->
             <div class="col-md-6">
                 {!! Form::label('nr_convenio', 'Convênio')!!}
-                @if(isset($conv))
                     <select required readonly="" name="nr_convenio" class="form-control margin-bottom-10" id="nr_convenio">
-                        <option value="{{$conv}}/{{ $ano}}">{{$conv}}/{{ $ano}}</option>
+                        <option value="{{$convenio->nr_convenio}}/{{$convenio->ano_convenio}}">{{$convenio->ds_sigla_objeto}}</option>
                     </select>
-                @elseif($ano_convenio != null)
-                    <select required readonly="" name="nr_convenio" class="form-control margin-bottom-10" id="nr_convenio">
-                        <option value="{{$nr_convenio}}/{{ $ano_convenio}}">{{$nr_convenio}}/{{ $ano_convenio}}</option>
-                    </select>
-                @else
-                    <select required name="nr_convenio" class="form-control margin-bottom-10" id="nr_convenio">
-                        <option value=""></option>
-                    </select>
-
-                @endif
             </div>
             <!--Sequencia meta aplicativo Form input-->
             <div class="col-md-6">
@@ -83,7 +72,7 @@
             {!! Form::close()!!}
             <div class="col-md-1">
                 <label for="firstName" class="control-label"><font color="#F0F0F0">.</font></label><br>
-                <a href="{{ route('planodetrabalho',[$ano,$conv,$fin[0]->id_financiador])}}"class="btn btn-warning">&nbspVoltar</a>
+                <a href="{{ route('planodetrabalho',[$convenio->ano_convenio,$convenio->nr_convenio,$convenio->id_financiador])}}"class="btn btn-warning">&nbspVoltar</a>
 
             </div>
 

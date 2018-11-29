@@ -27,7 +27,7 @@
             <div class="col-md-6">
                 {!! Form::label('nr_convenio', 'Convênio')!!}
                 <select required readonly name="nr_convenio" class="form-control margin-bottom-10" id="nr_convenio">
-                    <option value="{{$conv->nr_convenio}}|{{$conv->ano_convenio }}">{{$conv->nr_convenio}}/{{$conv->ds_sigla_objeto}}</option>
+                    <option value="{{$convenio->nr_convenio}}|{{$convenio->ano_convenio}}">{{$convenio->ds_sigla_objeto}}</option>
                 </select>
             </div>
             <!--Sequencia meta aplicativo Form input-->
@@ -87,13 +87,7 @@
                 <div class="col-md-3">
                     <br>
                     <br>
-                    <?php
-                    $ano = $planodetrabalho->ano_convenio;
-                    $nr = $planodetrabalho->nr_convenio;
-                    $f = $planodetrabalho->id_financiador;
-
-                    ?>
-                    <a href="{{ route('planodetrabalho',[$ano,$nr,$f])}}"class="btn btn-warning">&nbspVoltar</a>
+                    <a href="{{ route('planodetrabalho',[$planodetrabalho->ano_convenio,$planodetrabalho->nr_convenio,$planodetrabalho->id_financiador])}}"class="btn btn-warning">&nbspVoltar</a>
                 </div>
             </div>
             <br><br><br><br><br><br>

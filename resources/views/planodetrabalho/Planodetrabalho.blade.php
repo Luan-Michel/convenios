@@ -31,9 +31,11 @@
         <div class="col-md-1">
             <a class="btn btn-warning " href="<?php echo url('principal'); ?>">Voltar</a>
         </div>
-        <div class="col-md-offset-10 col-md-1">
-          <a class="btn btn-success" href="{{ route('planodetrabalho.Cadastrar', [$ano,$nr,$f])}}" ><i class="glyphicon glyphicon-plus"></i>&nbsp;Novo</a>
-        </div>
+        @if(isset($conv))
+          <div class="col-md-offset-10 col-md-1">
+            <a class="btn btn-success" href="{{ route('planodetrabalho.Cadastrar', [$ano,$nr,$f])}}" ><i class="glyphicon glyphicon-plus"></i>&nbsp;Novo</a>
+          </div>
+        @endif
         <br><br><br>
         <div class="container">
             <br><br>

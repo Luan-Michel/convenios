@@ -35,38 +35,20 @@ class PlanodetrabalhoController extends Controller
 
     public function Adicionar($ano_conv, $nr_conv, $f)
     {
-        $financiador = \App\Financiador::all(['nm_financiador', 'id_financiador']);
-        $convenio = \App\Convenio::all(['nr_convenio', 'ano_convenio']);
+        $convenio = \App\Convenio::where('ano_convenio', $ano_conv)->where('nr_convenio', $nr_conv)->where('id_financiador', $f)->first();
         $seq = intval(DB::TABLE('AC_META_APLIC')->MAX('seq_meta_aplic'))+1;
 
-        //usado quando cria um convenio e é direcionado direto para o plano de trabalho
-        $conv_financiador=null;
-        $financiador_plano=null;
-        $ano_convenio=null;
-        $nr_convenio=null;
-        $fin = \App\Financiador::where('id_financiador', $f)->get();
         return view('planodetrabalho.Cadastrarplano')
-            ->with('fin', $fin)
             ->with('seq', $seq)
-            ->with('conv', $nr_conv)
-            ->with('ano', $ano_conv)
-            ->with('financiador', $financiador)
-            ->with('convenio', $convenio)
-            ->with('conv_financiador',$conv_financiador)
-            ->with('ano_convenio',$ano_convenio)
-            ->with('nr_convenio',$nr_convenio);
+            ->with('convenio', $convenio);
     }
 
 
     public function Editar($id)
     {
-        $financiador = \App\Financiador::all();
         $planodetrabalho = \App\Planodetrabalho::find($id);
-        //dd($planodetrabalho);
-        //busca no banco de Convenio.ds_sigla_objeto e Financiador.nm_financiador
-        $fin = \App\Financiador::find($planodetrabalho->id_financiador);
-        $conv = \App\Convenio::where('id_convenio', $planodetrabalho->id_convenio)->first();
-        //tratamento formato da data
+        $convenio = DB::TABLE('AC_CONVENIO')->WHERE('id_convenio', $planodetrabalho->id_convenio)->first();
+
         $old_dt_inicio = $planodetrabalho->dt_inicio_meta;
         $old_dt_termino = $planodetrabalho->dt_termino_meta;
         $new_dt_inicio = date('d/m/Y', strtotime($old_dt_inicio));
@@ -74,7 +56,8 @@ class PlanodetrabalhoController extends Controller
         $planodetrabalho = $this->array_push_assoc($planodetrabalho, 'dt_inicio_meta', $new_dt_inicio);
         $planodetrabalho = $this->array_push_assoc($planodetrabalho, 'dt_termino_meta', $new_dt_termino);
 
-        return view('planodetrabalho.Editar', compact('financiador', 'planodetrabalho', 'fin', 'conv'))->with('financiador', $financiador, 'planodetrabalho', $planodetrabalho, 'fin', $fin, 'conv', $conv);
+
+        return view('planodetrabalho.Editar', compact('planodetrabalho', 'convenio'))->with('planodetrabalho', $planodetrabalho, 'convenio', $convenio);
     }
 
     public function Visualizar($id)
@@ -92,14 +75,12 @@ class PlanodetrabalhoController extends Controller
         return view('planodetrabalho.Visualizar', compact('financiador', 'planodetrabalho', 'fin', 'conv'))->with('financiador', $financiador, 'planodetrabalho', $planodetrabalho, 'fin', $fin, 'conv', $conv);
     }
 
-    public function atualizabanco(PlanodetrabalhoRequest $request, $id)
+    public function atualizabanco(Request $request, $id)
     {
-
         $input = $request->all();
         //faz-se a divisão das datas
         $retorno_dt_inicio = explode('/', $request->dt_inicio_meta);
         $retorno_dt_termino = explode('/', $request->dt_termino_meta);
-        $input = $this->array_push_assoc($input, 'id_convenio', $retorno[0]);
         //atribui ao objeto os valores de dt_inicio e dt_termino
         $input = $this->array_push_assoc($input, 'dt_inicio_meta', $retorno_dt_inicio[2] . "-" . $retorno_dt_inicio[1] . "-" . $retorno_dt_inicio[0]);
         $input = $this->array_push_assoc($input, 'dt_termino_meta', $retorno_dt_termino[2] . "-" . $retorno_dt_termino[1] . "-" . $retorno_dt_termino[0]);
@@ -107,7 +88,9 @@ class PlanodetrabalhoController extends Controller
         //dd($input);
         //***fim tratamento dados***
         $f = Planodetrabalho::find($id)->update($input);
-        return redirect()->route('planodetrabalho',[$input['ano_convenio'],$input['nr_convenio'],$input['id_financiador']]);
+        $f = Planodetrabalho::find($id);
+        $convenio = DB::TABLE('AC_CONVENIO')->WHERE('id_convenio', $f->id_convenio)->first();
+        return redirect()->route('planodetrabalho',[$convenio->ano_convenio,$convenio->nr_convenio,$convenio->id_financiador]);
     }
 
     public function Deletar($id)
