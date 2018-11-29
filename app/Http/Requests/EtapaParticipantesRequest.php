@@ -23,7 +23,7 @@ class EtapaParticipantesRequest extends Request
     {
         return [
             'id_etapa_aplic' => 'required',
-//            'id_pessoa_participante' => 'required',
+            'id_pessoa_participante' => 'required',
         ];
     }
 }

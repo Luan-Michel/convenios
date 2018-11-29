@@ -32,13 +32,9 @@
         </div>
 
         <div class="col-md-12">
-            {!! Form::label('id_pessoa_participante','Participantes')!!}
-            <select required name="id_pessoa_participante" class="form-control margin-bottom-10"
-                    id="id_pessoa_participante">
+            {!! Form::label('id_pessoa_participante','Participante')!!}
+            <select required name="id_pessoa_participante" class="form-control margin-bottom-10" id="id_pessoa_participante">
                 <option value=""></option>
-                @foreach($participantes as $participantes)
-                    <option value="{{$participantes->id_pessoa_participante}}|{{$participantes->id_financiador}}|{{$participantes->ano_convenio}}|{{$participantes->nr_convenio}}">{{$participantes->id_pessoa_participante}} - {{$participantes->nm_pessoa_completa}}</option>
-                @endforeach
             </select>
         </div>
 
@@ -66,21 +62,40 @@
 
 @section('content_js')
     <script type="text/javascript">
-        $('#id_etapa_aplic').selectize({
-            create: true,
-            sortField: {
-                field: 'text',
-                direction: 'asc'
-            },
-            dropdownParent: 'body'
-        });
-        $('#id_pessoa_participante').selectize({
-            create: true,
-            sortField: {
-                field: 'text',
-                direction: 'asc'
-            },
-            dropdownParent: 'body'
-        });
+
+    $('#id_etapa_aplic').on('change', function (evt) {
+        var etapa = $('#id_etapa_aplic').val();
+        if(etapa != '')
+        {
+            $.ajax({
+              url: "adicionar/getetapa/"+etapa,
+              type: "get",
+              dataType: "json",
+              beforeSend: function(){
+                swal({
+                    title: 'Carregando!',
+                    icon: '{{asset("images/Loading_icon.gif")}}',
+                    buttons: false,
+                });
+              },
+              success: function (data) {
+                  swal.close(); //remove o swal de carregamento
+                  console.log(data);
+                  if(data[0].text)
+                  {
+                    $("#id_pessoa_participante").empty();
+                    for(i=0; i < data.length; i++){
+                      var option = new Option(data[i].text, data[i].id, true, true);
+                      $("#id_pessoa_participante").append(option);
+                      $("#id_pessoa_participante").trigger('change')
+                    }
+                  }else{
+
+                  }
+              }
+          });
+        }
+      });
+
     </script>
 @endsection

@@ -103,8 +103,10 @@ Route::group(['middleware' => 'sgiauth'], function() {
         Route::get('{id}/deletar', ['as'=>'etapaparticipantes.Deletar' ,'uses'=>'EtapaParticipantesController@Deletar']);
         Route::get('{id}/editar', ['as'=>'etapaparticipantes.Editar', 'uses'=>'EtapaParticipantesController@Editar']);
         Route::get('{id}/visualizar', ['as'=>'etapaparticipantes.visualizar', 'uses'=>'EtapaParticipantesController@Index']);
-        Route::put('{id}/atualizabanco',['as'=>'etapaparticipantes.atualizabanco', 'uses'=>'EtapaParticipantesController@atualizabanco']);
+        Route::post('{id}/atualizabanco',['as'=>'etapaparticipantes.atualizabanco', 'uses'=>'EtapaParticipantesController@atualizabanco']);
         Route::get('visualizar', ['as'=>'etapaparticipantes.Visualizar', 'uses'=>'EtapaParticipantesController@Index']);
+        Route::get('adicionar/getetapa/{id}', ['as'=>'etapaparticipantes.getEtapa', 'uses'=>'EtapaParticipantesController@getEtapa']);
+        Route::get('{id}/editar/getetapa/{id_etapa}', ['as'=>'etapaparticipantes.getEtapaEdit', 'uses'=>'EtapaParticipantesController@getEtapaEdit']);
     });
 
     Route::group(['prefix'=>'pessoa', 'where'=>['id'=>'[0-9]+']], function(){
@@ -146,10 +148,11 @@ Route::group(['middleware' => 'sgiauth'], function() {
         Route::post('store', ['as'=>'etapaitem.store', 'uses'=>'EtapaItemController@store']);
         Route::get('{id}/deletar', ['as'=>'etapaitem.Deletar' ,'uses'=>'EtapaItemController@Deletar']);
         Route::get('{id}/editar', ['as'=>'etapaitem.Editar' ,'uses'=>'EtapaItemController@Editar']);
+        Route::get('{id}/editar/nm_desp/search/{nm_desp}', 'EtapaItemController@getNameDespEdit');
         Route::put('{id}/atualizabanco',['as'=>'etapaitem.atualizabanco', 'uses'=>'EtapaItemController@atualizabanco']);
         Route::get('{id}/visualizar', ['as'=>'etapaitem.Visualizar' ,'uses'=>'EtapaItemController@Visualizar']);
         Route::get('adicionar/cd_desp/{desp}', 'EtapaItemController@getDespesas');
-        Route::get('adicionar/nm_desp/search/{nm_desp}', 'EtapaItemController@getNameDesp');
+        Route::get('adicionar/nm_desp/search/{nm_desp}','EtapaItemController@getNameDesp');
     });
     //Prévio Empenho
     Route::group(['prefix'=>'previoempenho', 'where'=>['id'=>'[0-9]+']], function(){
@@ -207,9 +210,12 @@ Route::group(['middleware' => 'sgiauth'], function() {
     Route::group(['prefix'=>'diarias', 'where'=>['id'=>'[0-9]+']], function(){
         Route::get('', ['as'=>'diarias', 'uses'=>'DiariasController@Index']);
         Route::get('adicionar', ['as'=>'diarias.Cadastrar', 'uses'=>'DiariasController@create']);
-        Route::get('{id}/deletar', ['as'=>'diarias.Deletar', 'uses'=>'DiariasController@create']);
+        Route::get('adicionar/id_cidade_destino/{id}', ['as'=>'diarias.getDestino', 'uses'=>'DiariasController@getDestino']);
+        Route::get('{id}/editar/id_cidade_destino/{id_cidade}', ['as'=>'diarias.getDestinoEditar', 'uses'=>'DiariasController@getDestinoEditar']);
+        Route::get('{id}/deletar', ['as'=>'diarias.Deletar', 'uses'=>'DiariasController@destroy']);
         Route::post('store', ['as'=>'diarias.store', 'uses'=>'DiariasController@store']);
-        Route::get('{id}/editar', ['as'=>'diarias.Editar', 'uses'=>'DiariasController@create']);
+        Route::post('{id}/update', ['as'=>'diarias.update', 'uses'=>'DiariasController@update']);
+        Route::get('{id}/editar', ['as'=>'diarias.Editar', 'uses'=>'DiariasController@edit']);
     });
 
     Route::group(['prefix'=>'ajuda', 'where'=>['id'=>'[0-9]+']], function(){

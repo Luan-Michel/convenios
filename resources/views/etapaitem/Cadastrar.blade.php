@@ -39,7 +39,7 @@
 
         <div class="col-md-5">
           {!! Form::label('cd_tabela','Nome da Despesa')!!}
-          <select class="form-control" onchaname="nm_desp" id="nm_desp">
+          <select class="form-control" onchange="despesa(this.value)" name="nm_desp" id="nm_desp">
            <option value='0'>- Search user -</option>
           </select>
         </div>
@@ -139,6 +139,11 @@
           }
          });
     });
+
+    function despesa(desp){
+
+      document.getElementById('cd_desp').value = desp;
+    }
 
     $('#cd_desp').on('blur', function (evt) {
         var cd_desp = $('#cd_desp').val();

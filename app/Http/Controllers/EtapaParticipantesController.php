@@ -15,6 +15,7 @@ use App\Contabilcontasplano;
 use App\Despesas;
 use App\Participantes;
 use App\Pessoa;
+use UxWeb\SweetAlert\SweetAlert;
 
 use DB;
 
@@ -32,6 +33,36 @@ class EtapaParticipantesController extends Controller
         return view('etapaparticipantes.EtapaParticipante', ['etapaparticipantes' => $ep]);
     }
 
+    public function getEtapa($id)
+    {
+        $etapa = DB::TABLE('AC_ETAPA_APLIC')->where('id_etapa_aplic', $id)->first();
+
+        $meta = DB::TABLE('AC_META_APLIC')->WHERE('id_aplicacao', $etapa->id_aplicacao)->first();
+
+        $participantes = DB::TABLE('AC_PARTICIPANTES')
+                          ->JOIN('PESSOA..PESSOA', 'PESSOA..PESSOA.id_pessoa', '=', 'AC_PARTICIPANTES.id_pessoa_participante')
+                          ->WHERE('id_convenio', $meta->id_convenio)
+                          ->select('PESSOA..PESSOA.nm_pessoa_completo as text', 'AC_PARTICIPANTES.id_pessoa_participante as id')
+                          ->get();
+
+        return response()->json($participantes);
+    }
+
+    public function getEtapaEdit($id, $id_etapa)
+    {
+        $etapa = DB::TABLE('AC_ETAPA_APLIC')->where('id_etapa_aplic', $id_etapa)->first();
+
+        $meta = DB::TABLE('AC_META_APLIC')->WHERE('id_aplicacao', $etapa->id_aplicacao)->first();
+
+        $participantes = DB::TABLE('AC_PARTICIPANTES')
+                          ->JOIN('PESSOA..PESSOA', 'PESSOA..PESSOA.id_pessoa', '=', 'AC_PARTICIPANTES.id_pessoa_participante')
+                          ->WHERE('id_convenio', $meta->id_convenio)
+                          ->select('PESSOA..PESSOA.nm_pessoa_completo as text', 'AC_PARTICIPANTES.id_pessoa_participante as id')
+                          ->get();
+
+        return response()->json($participantes);
+    }
+
     public function Adicionar()
     {
         $pt = \App\EtapaPlanodetrabalho::all();
@@ -44,85 +75,73 @@ class EtapaParticipantesController extends Controller
             $ept[$key] = $pt;
         }
 
-        $part = array();
-        foreach ($p as $key => $p) {
-            $nm_pessoa_completa = \App\Pessoa::where('id_pessoa', '=', $p['id_pessoa_participante'])->get();
-            $this->array_push_assoc($p, 'nm_pessoa_completa', $nm_pessoa_completa[0]['nm_pessoa_completo']);
-            $part[$key] = $p;
-        }
-        return view('etapaparticipantes.Cadastrar')->with('planodetrabalho', $ept)->with('participantes', $part);
+        return view('etapaparticipantes.Cadastrar')->with('planodetrabalho', $ept);
     }
 
     public function Editar($id)
     {
-        $pt = \App\EtapaPlanodetrabalho::all();
-        $p = \App\Participantes::all();
+      $pt = \App\EtapaPlanodetrabalho::all();
+      $p = \App\Participantes::all();
 
-        $ept = array();
-        foreach ($pt as $key => $pt) {
-            $ds_titulo_meta_aplic = \App\Planodetrabalho::find($pt['id_aplicacao']);
-            $this->array_push_assoc($pt, 'ds_titulo_meta_aplic', $ds_titulo_meta_aplic->ds_titulo_meta_aplic);
-            $ept[$key] = $pt;
-        }
+      $ept = array();
+      foreach ($pt as $key => $pt) {
+          $ds_titulo_meta_aplic = \App\Planodetrabalho::find($pt['id_aplicacao']);
+          $this->array_push_assoc($pt, 'ds_titulo_meta_aplic', $ds_titulo_meta_aplic->ds_titulo_meta_aplic);
+          $ept[$key] = $pt;
+      }
 
-        $part = array();
-        foreach ($p as $key => $p) {
-            $nm_pessoa_completa = \App\Pessoa::where('id_pessoa', '=', $p['id_pessoa_participante'])->get();
-            $this->array_push_assoc($p, 'nm_pessoa_completa', $nm_pessoa_completa[0]['nm_pessoa_completo']);
-            $part[$key] = $p;
-        }
+      $participante = DB::TABLE('AC_ETAPA_PARTICIPANTES')->WHERE('id_etapa_participante', $id)->first();
 
-        $ep = \App\EtapaParticipante::where('id_etapa_participante', '=', $id)->get();
-        $id_etapa_aplic = \App\EtapaPlanodetrabalho::where('id_etapa_aplic', '=', $ep[0]['id_etapa_aplic'])->get();
-        $id_aplicacao = \App\Planodetrabalho::where('id_aplicacao', '=',$id_etapa_aplic[0]['id_aplicacao'])->get();
-        $id_pessoa_participante = \App\Pessoa::where('id_pessoa', '=', $ep[0]['id_pessoa_participante'])->get();
-        $this->array_push_assoc($ep[0], 'ds_titulo_meta_aplic', $id_aplicacao[0]['ds_titulo_meta_aplic']);
-        $this->array_push_assoc($ep[0], 'ds_titulo_etapa', $id_etapa_aplic[0]['ds_titulo_etapa']);
-        $this->array_push_assoc($ep[0], 'nm_pessoa_completo', $id_pessoa_participante[0]['nm_pessoa_completo']);
+      $etapa = DB::TABLE('AC_ETAPA_APLIC')->where('id_etapa_aplic', $participante->id_etapa_aplic)->first();
 
-        return view('etapaparticipantes.Editar')->with('participantes',$part)->with('planodetrabalho',$ept)->with('etapaparticipante',$ep);
+      $meta = DB::TABLE('AC_META_APLIC')->WHERE('id_aplicacao', $etapa->id_aplicacao)->first();
+
+      $participantes = DB::TABLE('AC_PARTICIPANTES')
+                        ->JOIN('PESSOA..PESSOA', 'PESSOA..PESSOA.id_pessoa', '=', 'AC_PARTICIPANTES.id_pessoa_participante')
+                        ->WHERE('id_convenio', $meta->id_convenio)
+                        ->select('PESSOA..PESSOA.nm_pessoa_completo', 'AC_PARTICIPANTES.id_pessoa_participante')
+                        ->get();
+
+      return view('etapaparticipantes.Editar')
+                ->with('planodetrabalho', $ept)
+                ->with('participante', $participante)
+                ->with('participantes', $participantes);
     }
 
     public function atualizabanco(EtapaParticipantesRequest $request, $id)
     {
-        $input = $request->all();
-        $retorno_pessoa_participante = explode('|', $input['id_etapa_participante']);
-        $input = $this->array_push_assoc($input, 'id_pessoa_participante', $retorno_pessoa_participante[0]);
-        $input = $this->array_push_assoc($input, 'id_financiador', $retorno_pessoa_participante[1]);
-        $input = $this->array_push_assoc($input, 'ano_convenio', $retorno_pessoa_participante[2]);
-        $input = $this->array_push_assoc($input, 'nr_convenio', $retorno_pessoa_participante[3]);
-        unset($input['_token']);
-        unset($input['_method']);
-        unset($input['id_etapa_participante']);
-//        dd($input);
-        EtapaParticipante::where('id_etapa_participante', '=', $id)->update($input);
-        return redirect()->route('etapaparticipantes');
+      $input = $request->all();
+      unset($input['_token']);
+
+      try {
+        DB::TABLE('AC_ETAPA_PARTICIPANTES')
+        ->WHERE('id_etapa_participante', $id)
+        ->UPDATE(['id_pessoa_participante' => $input['id_pessoa_participante']]);
+        SweetAlert::success("Participante atualizado com sucesso na etapa.");
+        return redirect()->route('etapaitem');
+      } catch (\Exception $e) {
+        return redirect()->back()->withInput($input)->withErrors(["Houve um erro, tente novamente ou contate o NTI."]);
+      }
     }
 
 
     public function store(EtapaParticipantesRequest $request)
     {
         $input = $request->all();
+        $etapa = DB::TABLE('AC_ETAPA_APLIC')->where('id_etapa_aplic', $input['id_etapa_aplic'])->first();
+        $meta = DB::TABLE('AC_META_APLIC')->WHERE('id_aplicacao', $etapa->id_aplicacao)->first();
 
-        $retorno_pessoa_participante = explode('|', $input['id_pessoa_participante']);
-        $input = $this->array_push_assoc($input, 'id_pessoa_participante', $retorno_pessoa_participante[0]);
-        $input = $this->array_push_assoc($input, 'id_financiador', $retorno_pessoa_participante[1]);
-        $input = $this->array_push_assoc($input, 'ano_convenio', $retorno_pessoa_participante[2]);
-        $input = $this->array_push_assoc($input, 'nr_convenio', $retorno_pessoa_participante[3]);
+        $input['id_convenio'] = $meta->id_convenio;
+        unset($input['_token']);
 
-        $c = DB::TABLE('AC_CONVENIO')
-              ->where('id_financiador', intval($retorno_pessoa_participante[1]))
-              ->where('ano_convenio', intval($retorno_pessoa_participante[2]))
-              ->where('nr_convenio', intval($retorno_pessoa_participante[3]))
-              ->first();
+        try {
+          DB::TABLE('AC_ETAPA_PARTICIPANTES')->INSERT($input);
+          SweetAlert::success("Participante cadastrada com sucesso na etapa.");
+          return redirect()->route('etapaitem');
+        } catch (\Exception $e) {
+          return redirect()->back()->withInput($input)->withErrors(["Houve um erro, tente novamente ou contate o NTI."]);
+        }
 
-        $i['id_pessoa_participante'] = $input['id_pessoa_participante'];
-        $i['id_etapa_aplic'] = $input['id_etapa_aplic'];
-        $i['id_convenio'] = $c->id_convenio;
-
-
-        DB::TABLE('AC_ETAPA_PARTICIPANTES')->INSERT($i);
-        return redirect()->route('etapaitem');
     }
 
     public function array_push_assoc($array, $key, $value)
@@ -136,7 +155,7 @@ class EtapaParticipantesController extends Controller
 //        dd($id);
         $ep = \App\EtapaParticipante::where('id_etapa_participante', $id);
         $ep->delete();
-        \Session::flash('flash_message', 'Etapa participante deletado com sucesso');
+        SweetAlert::success("Participante removido com sucesso da etapa.");
         return redirect()->route('etapaparticipantes');
     }
 

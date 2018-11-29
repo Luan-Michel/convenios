@@ -44,9 +44,8 @@
                         </a>
                     </td>
                     <td align="center">
-                        <a href="{{ route('etapaparticipantes.Deletar',['nr'=>$etapaparticipantes->id_etapa_participante])}}" class="btn-sm btn-danger">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-
+                        <a onclick="remove('{{route('etapaparticipantes.Deletar',['nr'=>$etapaparticipantes->id_etapa_participante])}}')" class="btn-sm btn-danger">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                         </a>
                         {{--<a href="/etapaparticipantes/{{$etapaparticipantes->id_etapa_participante}}/visualizar" class="btn-sm btn-primary">Visualizar</a>--}}
                     </td>
@@ -66,11 +65,33 @@
         </div>
     </div>
 
+    @include('sweet::alert')
 
 @endsection
 
 @section('content_js')
-    <script> $("table").dataTable({
+    <script type="text/javascript">
+
+      function remove(rota){
+        swal({
+          title: 'Você tem certeza que deseja remover o participante da etapa?',
+          text: "Esta ação não poderá ser desfeita.",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            window.location.href = rota;
+          }
+        });
+      }
+
+    </script>
+
+    <script>
+
+        $("table").dataTable({
             "language": {
                 "url": "/Portuguese.json",
                 "search":"Pesquisar",

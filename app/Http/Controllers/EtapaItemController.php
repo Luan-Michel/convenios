@@ -38,33 +38,23 @@ class EtapaItemController extends Controller
     public function Editar($id)
     {
         $etapaitem = \App\EtapaItem::where('id_etapa_item_aplic', $id)->first();
+
+        $e = \App\EtapaPlanodetrabalho::all();
+        $p = \App\Pais::all()->sortBy('nm_pais');
+        $m = \App\Moeda::all()->sortBy('ds_moeda');
+        $d = DB::TABLE('COMPRAS..DESPESA')->where('cd_desp', $etapaitem->cd_desp)->where('cd_tabela', $etapaitem->cd_tabela)->first();
         //tratamento dados
         $etapaitem->dt_aplicacao = date('d/m/Y', strtotime($etapaitem->dt_aplicacao));
         $etapaitem->vl_item = str_replace('.', ',', $etapaitem->vl_item);
         $etapaitem->vl_total_item = str_replace('.', ',', $etapaitem->vl_total_item);
         // fim tratamento
-        $ep = DB::TABLE('AC_ETAPA_APLIC')->where('id_etapa_aplic', '=', intval($etapaitem->id_etapa_aplic))->first();
-
-        $pais = \App\Pais::where('id_pais', '=', $etapaitem->id_pais)->first();
-        $moeda = \App\Moeda::where('id_moeda', '=', $etapaitem->id_moeda)->first();
-        $cdd = \App\Despesas::where('cd_desp', '=', $etapaitem->cd_desp)
-            ->where('cd_tabela', '=', $etapaitem->cd_tabela)
-            ->first();
-        $e = \App\EtapaPlanodetrabalho::all();
-        $p = \App\Pais::all()->sortBy('nm_pais');
-        $m = \App\Moeda::all()->sortBy('ds_moeda');
-        $d = \App\Despesas::all();
 
         return view('etapaitem.Editar')
-        ->with('d', $d)
-        ->with('m', $m)
-        ->with('p', $p)
-        ->with('ept', $e)
-        ->with('despesa', $cdd)
-        ->with('moeda', $moeda)
-        ->with('pais', $pais)
-        ->with('etapaplanodetrabalho', $ep)
-        ->with('etapaitem', $etapaitem);
+              ->with('etapaitem', $etapaitem)
+              ->with('etapas', $e)
+              ->with('despesa', $d)
+              ->with('moeda', $m)
+              ->with('pais', $p);
     }
 
     public function Deletar($id)
@@ -143,6 +133,23 @@ class EtapaItemController extends Controller
     }
 
     public function getNameDesp($nm_desp)
+    {
+        //$cd_tab = intval($cd_tab);
+        //return response()->json($nm_desp);
+        $tab = DB::TABLE('COMPRAS..DESPESA')
+                    ->MAX('CD_TABELA');
+
+        $nm_desp = "%".$nm_desp."%";
+        $d = DB::TABLE('COMPRAS..DESPESA')
+              ->WHERE('NM_DESP', 'LIKE', $nm_desp)
+              ->WHERE('CD_TABELA', $tab)
+              ->LIMIT(50)
+              ->select('CD_DESP as id', 'NM_DESP as text')
+              ->get();
+        return response()->json($d);
+    }
+
+    public function getNameDespEdit($id, $nm_desp)
     {
         //$cd_tab = intval($cd_tab);
         //return response()->json($nm_desp);
