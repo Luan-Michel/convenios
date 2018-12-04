@@ -75,6 +75,7 @@ class EtapaPlanodetrabalhoController extends Controller
     public function atualizabanco(EtapaplanodetrabalhoRequest $request, $id)
     {
         $input = $request->all();
+        $meta = DB::TABLE('AC_META_APLIC')->where('id_aplicacao', $input['id_aplicacao'])->first();
         //***inicio tratamento dados***
         $retorno = explode('|', $request->cd_tabela);
         $input = $this->array_push_assoc($input, 'cd_tabela', $retorno[1]);
@@ -89,6 +90,14 @@ class EtapaPlanodetrabalhoController extends Controller
         unset($input['_method']);
         //***fim tratamento dados***
 //        dd($input);
+
+        if((strtotime($input['dt_inicio_etapa']) < strtotime($meta->dt_inicio_meta)) ||
+           (strtotime($input['$dt_termino_etapa']) > strtotime($meta->dt_termino_meta)) ||
+           (strtotime($input['$dt_termino_etapa']) < strtotime($input['dt_inicio_etapa']))){
+             SweetAlert::error("Há erros de datas, por favor revise-as.");
+             return redirect()->back();
+           }
+
         $f = EtapaPlanodetrabalho::find($id)->update($input);
         return redirect()->route('etapaplanodetrabalho');
     }
@@ -96,6 +105,7 @@ class EtapaPlanodetrabalhoController extends Controller
     public function store(EtapaplanodetrabalhoRequest $request)
     {
         $input = $request->all();
+        $meta = DB::TABLE('AC_META_APLIC')->where('id_aplicacao', $input['id_aplicacao'])->first();
         //***inicio tratamento dados***
         $retorno = explode('|', $request->cd_tabela);
         $input = $this->array_push_assoc($input, 'cd_tabela', $retorno[1]);
@@ -107,6 +117,14 @@ class EtapaPlanodetrabalhoController extends Controller
         $input = $this->array_push_assoc($input, 'dt_inicio_etapa', $retorno_dt_inicio[2] . "-0" . $retorno_dt_inicio[1] . "-" . $retorno_dt_inicio[0] . " 00:00:00");
         $input = $this->array_push_assoc($input, 'dt_termino_etapa', $retorno_dt_termino[2] . "-0" . $retorno_dt_termino[1] . "-" . $retorno_dt_termino[0] . " 00:00:00");
         //***fim tratamento dados***
+
+        if((strtotime($input['dt_inicio_etapa']) < strtotime($meta->dt_inicio_meta)) ||
+           (strtotime($input['dt_termino_etapa']) > strtotime($meta->dt_termino_meta)) ||
+           (strtotime($input['dt_termino_etapa']) < strtotime($input['dt_inicio_etapa']))){
+             SweetAlert::error("Há erros de datas, por favor revise-as.");
+             return redirect()->back();
+           }
+
         EtapaPlanodetrabalho::create($input);
         return redirect()->route('etapaparticipantes');
     }

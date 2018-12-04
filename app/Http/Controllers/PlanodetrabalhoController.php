@@ -78,6 +78,7 @@ class PlanodetrabalhoController extends Controller
     public function atualizabanco(Request $request, $id)
     {
         $input = $request->all();
+        $convenio = DB::TABLE('AC_CONVENIO')->WHERE('id_convenio', $f->id_convenio)->first();
         //faz-se a divisão das datas
         $retorno_dt_inicio = explode('/', $request->dt_inicio_meta);
         $retorno_dt_termino = explode('/', $request->dt_termino_meta);
@@ -87,9 +88,16 @@ class PlanodetrabalhoController extends Controller
         //***fim tratamento dados***
         //dd($input);
         //***fim tratamento dados***
+
+        if((strtotime($input['dt_inicio_meta']) > strtotime($input['dt_termino_meta'])) ||
+            (strtotime($input['dt_inicio_meta']) < strtotime($convenio->dt_inicio)) ||
+            (strtotime($input['dt_termino_meta']) > strtotime($convenio->dt_termino))){
+              SweetAlert::error("Há erros de datas, por favor revise-as.");
+              return redirect()->back();
+            }
+
         $f = Planodetrabalho::find($id)->update($input);
         $f = Planodetrabalho::find($id);
-        $convenio = DB::TABLE('AC_CONVENIO')->WHERE('id_convenio', $f->id_convenio)->first();
         return redirect()->route('planodetrabalho',[$convenio->ano_convenio,$convenio->nr_convenio,$convenio->id_financiador]);
     }
 
@@ -131,12 +139,18 @@ class PlanodetrabalhoController extends Controller
         $i['dt_inicio_meta'] = $input['dt_inicio_meta'];
         $i['dt_termino_meta'] = $input['dt_termino_meta'];
 
+        if((strtotime($i['dt_inicio_meta']) > strtotime($i['dt_termino_meta'])) ||
+            (strtotime($i['dt_inicio_meta']) < strtotime($c->dt_inicio)) ||
+            (strtotime($i['dt_termino_meta']) > strtotime($c->dt_limite_vigencia))){
+              SweetAlert::error("Há erros de datas, por favor revise-as.");
+              return redirect()->back();
+            }
+
         try {
           DB::TABLE('AC_META_APLIC')->insert($i);
-
           return redirect()->route('etapaplanodetrabalho');
         } catch (\Exception $e) {
-
+          return redirect()->back();
         }
 
     }

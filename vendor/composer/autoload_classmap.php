@@ -36,6 +36,7 @@ return array(
     'App\\Http\\Controllers\\ContaCorrenteController' => $baseDir . '/app/Http/Controllers/ContaCorrenteController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\ConvenioController' => $baseDir . '/app/Http/Controllers/ConvenioController.php',
+    'App\\Http\\Controllers\\DiariasController' => $baseDir . '/app/Http/Controllers/DiariasController.php',
     'App\\Http\\Controllers\\EtapaItemController' => $baseDir . '/app/Http/Controllers/EtapaItemController.php',
     'App\\Http\\Controllers\\EtapaParticipantesController' => $baseDir . '/app/Http/Controllers/EtapaParticipantesController.php',
     'App\\Http\\Controllers\\EtapaPlanodetrabalhoController' => $baseDir . '/app/Http/Controllers/EtapaPlanodetrabalhoController.php',
