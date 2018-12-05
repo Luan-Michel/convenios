@@ -14,7 +14,7 @@
             </ul>
         @endif
         <div class="col-md-6">
-          <h1>Plano de Trabalho</h1>
+          <h1>Meta de Aplicação</h1>
         </div>
         <div style="padding-top: 20px" class="col-md-6">
            <a href="{{route('ajuda')}}#plano_de_trabalho" target="_blank" style="float:right;" class="btn btn-default"> <span class="glyphicon glyphicon-question-sign"></span> </a>
@@ -24,35 +24,31 @@
     <!--Financiador-->
         <div class="col-md-12">
             <!--Convênio-->
-            <div class="col-md-6">
+            <div class="col-md-12">
                 {!! Form::label('nr_convenio', 'Convênio')!!}
                     <select required readonly="" name="nr_convenio" class="form-control margin-bottom-10" id="nr_convenio">
-                        <option value="{{$convenio->nr_convenio}}/{{$convenio->ano_convenio}}">{{$convenio->ds_sigla_objeto}}</option>
+                        <option value="{{$convenio->nr_convenio}}/{{$convenio->ano_convenio}}">{{$convenio->nr_convenio}}/{{$convenio->ano_convenio}}</option>
                     </select>
             </div>
-            <!--Sequencia meta aplicativo Form input-->
-            <div class="col-md-6">
-                {!! Form::label('seq_meta_aplic','Sequência meta aplicação')!!}
-                {!! Form::number('seq_meta_aplic', $seq, ['class'=>'form-control', 'min'=>'0', 'readonly'])!!}
-            </div>
+            <br>
             <!--Titulo convenio Form input-->
             <div class="col-md-6">
-                {!! Form::label('ds_titulo_meta_aplic','Título meta aplicação')!!}
+                {!! Form::label('ds_titulo_meta_aplic','Título')!!}
                 {!! Form::text('ds_titulo_meta_aplic', null, ['class'=>'form-control'])!!}
             </div>
             <!--Datas inicio e fim-->
             <div class="col-md-3 margin-bottom-5" id="dp1">
-                <label for="firstName" class="control-label">Início da meta</label>
+                <label for="firstName" class="control-label">Data de Início</label>
                 <br><input id="dt_inicio_meta" required class="date" name="dt_inicio_meta" type="text"  onchange="termino()"/><br>
             </div>
             <div class="col-md-3 margin-bottom-5" id="dp2">
-                <label for="lastName" class="control-label">Término da meta</label>
+                <label for="lastName" class="control-label">Data de Término</label>
                 <br><input id="dt_termino_meta" required class="date" name="dt_termino_meta" type="text"  /><br>
             </div>
             <br>
             <!--Meta Form input-->
             <div class="form-group">
-                <label class="col-md-12 control-label" for="textarea"><br>Meta aplicação</label>
+                <label class="col-md-12 control-label" for="textarea"><br>Descrição Completa</label>
                 <div class="col-md-12">
                     <textarea class="form-control" required type="text" id="ds_meta_aplic" name="ds_meta_aplic"></textarea>
                 </div>

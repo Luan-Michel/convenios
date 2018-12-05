@@ -13,7 +13,7 @@
         @endif
         <div class="col-md-12">
           <div class="col-md-6">
-            <h1>Etapa do Plano de trabalho</h1>
+            <h1>Etapa da Meta</h1>
           </div>
           <div style="padding-top: 20px" class="col-md-6">
              <a href="{{route('ajuda')}}#etapa_plano_de_trabalho" target="_blank" style="float:right;" class="btn btn-default"> <span class="glyphicon glyphicon-question-sign"></span> </a>
@@ -22,7 +22,7 @@
         {!! Form::open(['route'=>'etapaplanodetrabalho.store'])!!}
 
         <div class="col-md-4">
-            {!! Form::label('id_aplicacao','Plano de Trabalho')!!}
+            {!! Form::label('id_aplicacao','Meta')!!}
             <select required name="id_aplicacao" class="form-control margin-bottom-10" id="id_aplicacao">
                 <option value=""></option>
                 @foreach($planodetrabalho as $planodetrabalho)
@@ -32,7 +32,7 @@
         </div>
 
         <div class="col-md-8">
-            {!! Form::label('cd_tabela','Despesas')!!}
+            {!! Form::label('cd_tabela','Rubrica de Despesa')!!}
             <select  required name="cd_tabela" class="form-control margin-bottom-10" id="cd_tabela">
                 <option value=""></option>
                 @foreach($despesas as $despesas)
@@ -41,7 +41,7 @@
             </select>
         </div>
         <div class="col-md-2">
-            {!! Form::label('idcontas_plano','CDRED')!!}
+            {!! Form::label('idcontas_plano','Conta Contábil')!!}
             <select required name="idcontas_plano" class="form-control margin-bottom-10" id="idcontas_plano">
                 <option value=""></option>
                 @foreach($contabil as $contabil)
@@ -50,11 +50,11 @@
             </select>
         </div>
         <div class="col-md-10">
-            {!! Form::label('ds_titulo_etapa','Titulo da Etapa')!!}
+            {!! Form::label('ds_titulo_etapa','Titulo')!!}
             {!! Form::text('ds_titulo_etapa', null, ['class'=>'form-control'])!!}
         </div>
         <div class="col-md-12">
-            {!! Form::label('ds_etapa_aplic','Etapa')!!}
+            {!! Form::label('ds_etapa_aplic','Descrição')!!}
             {!! Form::textarea('ds_etapa_aplic', null, ['class'=>'form-control'])!!}
         </div>
         <div class="col-md-3" id="dp1">
@@ -82,17 +82,17 @@
         </div>
         <div class="col-md-3">
             {!! Form::label('vl_reservado','Valor Reservado')!!}
-            <input required type="text" data-mask="#.##0,00" data-mask-reverse="true" value="" id="vl_reservado"
+            <input required readonly type="text" data-mask="#.##0,00" data-mask-reverse="true" value="" id="vl_reservado"
                    name="vl_reservado" class="form-control"/>
         </div>
         <div class="col-md-3">
-            {!! Form::label('vl_empenhado','Valor Empenhorado')!!}
-            <input required type="text" data-mask="#.##0,00" data-mask-reverse="true" value="" id="vl_empenhado"
+            {!! Form::label('vl_empenhado','Valor Empenhado')!!}
+            <input required readonly type="text" data-mask="#.##0,00" data-mask-reverse="true" value="" id="vl_empenhado"
                    name="vl_empenhado" class="form-control"/>
         </div>
         <div class="col-md-3">
             {!! Form::label('vl_saldo','Valor Saldo')!!}
-            <input required type="text" data-mask="#.##0,00" data-mask-reverse="true" value="" id="vl_saldo"
+            <input required readonly type="text" data-mask="#.##0,00" data-mask-reverse="true" value="" id="vl_saldo"
                    name="vl_saldo" class="form-control"/>
         </div>
 

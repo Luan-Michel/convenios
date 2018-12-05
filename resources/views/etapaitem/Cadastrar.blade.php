@@ -5,7 +5,7 @@
     <div class="container">
         <div class="col-md-12" id="cabecalho">
           <div class="col-md-6">
-            <h1>Item na Etapa</h1>
+            <h1>Item da Etapa</h1>
           </div>
           <div style="padding-top: 20px" class="col-md-6">
              <a href="{{route('ajuda')}}#item_etapa" target="_blank" style="float:right;" class="btn btn-default"> <span class="glyphicon glyphicon-question-sign"></span> </a>
@@ -23,7 +23,7 @@
         {!! Form::open(['route'=>'etapaitem.store'])!!}
 
         <div class="col-md-4">
-            {!! Form::label('id_etapa_aplic','Etapa Plano de Trabalho')!!}
+            {!! Form::label('id_etapa_aplic','Etapa')!!}
             <select required name="id_etapa_aplic" class="form-control margin-bottom-10" id="id_etapa_aplic" onchange="selectajax()" >
                 <option value=""></option>
                 @foreach($etapaplanodetrabalho as $etapaplanodetrabalho)
@@ -33,14 +33,14 @@
         </div>
 
         <div class="col-md-3">
-            {!! Form::label('cd_desp','Despesa')!!}
+            {!! Form::label('cd_desp','Rubrica de Despesa')!!}
             <input type="text" class="form-control" name="cd_desp" id="cd_desp">
         </div>
 
         <div class="col-md-5">
           {!! Form::label('cd_tabela','Nome da Despesa')!!}
           <select class="form-control" onchange="despesa(this.value)" name="nm_desp" id="nm_desp">
-           <option value='0'>- Search user -</option>
+           <option value='0'>- Busca Despesa -</option>
           </select>
         </div>
 
@@ -63,23 +63,23 @@
             </select>
         </div>
         <div class="col-md-3 margin-bottom-5" id="dp2">
-            {!! Form::label('dt_aplicacao','Data Aplicação')!!}
+            {!! Form::label('dt_aplicacao','Data Início da Aplicação')!!}
             <br><input id="dt_aplicacao" required class="date" name="dt_aplicacao" type="text"/><br>
         </div>
         <div class="col-md-3">
-            {!! Form::label('vl_item','Valor unitário Item')!!}
+            {!! Form::label('vl_item','Valor Unitário')!!}
             <input required id="vl_item" name="vl_item" type="text" data-mask="#.##0,00" data-mask-reverse="true">
         </div>
         <div class="col-md-3">
-            {!! Form::label('qt_item','Quantidade Item')!!}
+            {!! Form::label('qt_item','Quantidade')!!}
             <input required id="qt_item" name="qt_item" type="number" min="0">
         </div>
         <div class="col-md-3">
-            {!! Form::label('vl_total_item','Valor Total Item')!!}
-            <input required id="vl_total_item" name="vl_total_item" type="text" data-mask="#.##0,00" data-mask-reverse="true">
+            {!! Form::label('vl_total_item','Valor Total')!!}
+            <input readonly required id="vl_total_item" name="vl_total_item" type="text" data-mask="#.##0,00" data-mask-reverse="true">
         </div>
         <div class="col-md-12">
-            {!! Form::label('ds_item','Descrição Item')!!}
+            {!! Form::label('ds_item','Descrição')!!}
             {!! Form::textarea('ds_item', null, ['class'=>'form-control'])!!}
         </div>
         <br>

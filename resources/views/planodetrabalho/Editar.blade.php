@@ -8,7 +8,7 @@
     @endif
 
     <div class='container'>
-        <h1>Plano de Trabalho: {{$planodetrabalho->ds_titulo_meta_aplic}}</h1>
+        <h1>Meta: {{$planodetrabalho->ds_titulo_meta_aplic}}</h1>
 
         @if($errors->any())
             <ul class="alert alert-warning">
@@ -24,31 +24,27 @@
     <!--Nome Form input-->
         <div class="col-md-12">
             <!--Convênio-->
-            <div class="col-md-6">
+            <div class="col-md-12">
                 {!! Form::label('nr_convenio', 'Convênio')!!}
                 <select required readonly name="nr_convenio" class="form-control margin-bottom-10" id="nr_convenio">
                     <option value="{{$convenio->nr_convenio}}|{{$convenio->ano_convenio}}">{{$convenio->ds_sigla_objeto}}</option>
                 </select>
             </div>
             <!--Sequencia meta aplicativo Form input-->
-            <div class="col-md-6">
-                {!! Form::label('seq_meta_aplic','Sequência meta aplicação')!!}
-                <input type="number" readonly id='seq_meta_aplic' name='seq_meta_aplic' value="{{$planodetrabalho->seq_meta_aplic}}" />
-            </div>
             <!--Titulo convenio Form input-->
             <div class="col-md-6">
-                {!! Form::label('ds_titulo_meta_aplic','Título meta aplicação')!!}
+                {!! Form::label('ds_titulo_meta_aplic','Título')!!}
                 {!! Form::text('ds_titulo_meta_aplic', $planodetrabalho->ds_titulo_meta_aplic, ['class'=>'form-control'])!!}
             </div>
             <!--Datas inicio e fim-->
             <div id="datepairExample">
                 <div class="col-md-3 margin-bottom-5" id="dp1">
-                    <label for="firstName" class="control-label">Início da meta</label>
+                    <label for="firstName" class="control-label">Data de Início</label>
                     <br><input id="dt_inicio_meta" value="{{$planodetrabalho->dt_inicio_meta}}" required
                                onkeypress="return false" name="dt_inicio_meta" type="text" class="date start"/><br>
                 </div>
                 <div class="col-md-3 margin-bottom-5" id="dp2">
-                    <label for="lastName" class="control-label">Término da meta</label>
+                    <label for="lastName" class="control-label">Data de Término</label>
                     <br><input id="dt_termino_meta" value="{{$planodetrabalho->dt_termino_meta}}" required
                                onkeypress="return false" name="dt_termino_meta" type="text" class="date end"/><br>
                 </div>
@@ -56,18 +52,12 @@
             <br>
             <!--Meta Form input-->
             <div class="form-group">
-                <label class="col-md-12 control-label" for="textarea"><br>Meta aplicação</label>
+                <label class="col-md-12 control-label" for="textarea"><br>Descrição</label>
                 <div class="col-md-6">
                     <textarea class="form-control" rows="4" required type="text" id="ds_meta_aplic" name="ds_meta_aplic">{{$planodetrabalho->ds_meta_aplic}}</textarea>
                 </div>
             </div>
 
-                <div class="col-md-3">
-                    <br><br>
-                    {{--wagner resolver dependencia rota.adicionar referente a cada pessoa--}}
-                    <a href="{{ route('pessoaconvenio.adicionar')}}" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>&nbsp;Novo Participante</a>
-
-                </div>
             <div class="col-md-3">
                 <br><br>
                 {{--wagner resolver dependencia rota.adicionar referente a cada pessoa--}}

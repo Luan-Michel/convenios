@@ -112,12 +112,12 @@ display: block;
                 <a href="{{ url('convenio') }}">Convênio</a>
                 <a href="{{ url('previoempenho') }}"> Prévio Empenho</a>
                 <a href="{{ route('pessoa')}}"> Pessoa</a>
-                <a href="{{ route('pessoaconvenio')}}">Participante</a>
-                <a href="{{ url('planodetrabalho') }}"> Plano de trabalho</a>
-                <a href="{{ url('etapaplanodetrabalho') }}"> Etapa do plano de trabalho</a>
-                <a href="{{ url('etapaparticipantes') }}"> Etapa participantes</a>
-                <a href="{{ url('etapaitem') }}"> Etapa Item</a>
-                <a href="{{ url('diarias') }}"> Diárias</a>
+                <a href="{{ route('pessoaconvenio')}}"> Participante</a>
+                <a href="{{ url('planodetrabalho') }}"> Plano de Trabalho</a>
+                <a href="{{ url('etapaplanodetrabalho') }}"> Etapa da Meta</a>
+                <a href="{{ url('etapaparticipantes') }}"> Participante da Etapa</a>
+                <a href="{{ url('etapaitem') }}"> Item da Etapa</a>
+                <a href="{{ url('diarias') }}"> Diária</a>
                 <a href="{{ url('ajuda') }}"> Ajuda</a>
               </div>
             </div>

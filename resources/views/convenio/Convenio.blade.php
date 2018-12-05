@@ -41,8 +41,8 @@
                 <tbody>
                 @foreach($convenio as $convenio)
                     <tr>
-                        <td>{{$convenio->ano_convenio}}</td>
-                        <td>{{$convenio->nr_convenio}}</td>
+                        <td align="right">{{$convenio->ano_convenio}}</td>
+                        <td align="right">{{$convenio->nr_convenio}}</td>
                         <td>{{$convenio->nm_financiador}}</td>
                         <td>{{$convenio->ds_sigla_objeto}}</td>
                         <td align="center">

@@ -35,8 +35,8 @@
                 <tbody>
                 @foreach($previoempenho as $previoempenho)
                     <tr>
-                        <td>{{$previoempenho->ano_rpe}}</td>
-                        <td>{{$previoempenho->nr_rpe}}</td>
+                        <td align="right">{{$previoempenho->ano_rpe}}</td>
+                        <td align="right">{{$previoempenho->nr_rpe}}</td>
                         <td>{{$previoempenho->id_pessoa}}</td>
                         <td align="center">
                             <a href="{{ route('previoempenho.Editar',['id_rpe'=>$previoempenho->id_rpe])}}" class="btn-sm btn-default"> <span class="glyphicon glyphicon-pencil"/></a>

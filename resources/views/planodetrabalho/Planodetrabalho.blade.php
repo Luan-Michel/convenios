@@ -33,7 +33,7 @@
         </div>
         @if(isset($conv))
           <div class="col-md-offset-10 col-md-1">
-            <a class="btn btn-success" href="{{ route('planodetrabalho.Cadastrar', [$ano,$nr,$f])}}" ><i class="glyphicon glyphicon-plus"></i>&nbsp;Novo</a>
+            <a class="btn btn-success" href="{{ route('planodetrabalho.Cadastrar', [$ano,$nr,$f])}}" ><i class="glyphicon glyphicon-plus"></i>&nbsp;Nova Meta</a>
           </div>
         @endif
         <br><br><br>
@@ -42,8 +42,7 @@
             <table class="table table-striped table-hover table-bordered" id="table">
                 <thead>
                 <tr>
-                    <th style="width: 80px">Sequência</th>
-                    <th>Título</th>
+                    <th>Título da Meta</th>
                     <th style="width: 80px">Alterar</th>
                     <th style="width: 80px">Excluir</th>
                 </tr>
@@ -51,7 +50,6 @@
                 <tbody>
                 @foreach($planodetrabalho as $planodetrabalho)
                     <tr>
-                        <td>{{$planodetrabalho->seq_meta_aplic}}</td>
                         <td>{{$planodetrabalho->ds_titulo_meta_aplic}}</td>
                         <td align="center">
                             <a href="{{ route('planodetrabalho.Editar',['id'=>$planodetrabalho->id_aplicacao])}}" class="btn-sm btn-default ">
@@ -77,7 +75,7 @@
         </div>
         @if(isset($conv))
           <div class="col-md-offset-10 col-md-1">
-            <a class="btn btn-success" href="{{ route('planodetrabalho.Cadastrar', [$ano,$nr,$f])}}" ><i class="glyphicon glyphicon-plus"></i>&nbsp;Novo</a>
+            <a class="btn btn-success" href="{{ route('planodetrabalho.Cadastrar', [$ano,$nr,$f])}}" ><i class="glyphicon glyphicon-plus"></i>&nbsp;Nova Meta</a>
           </div>
         @endif
     </div>

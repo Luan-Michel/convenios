@@ -164,22 +164,22 @@
                 <div class="col-md-8 pull-left inputanexo ">
                     <br>
                     {!! Form::label('anexo','Anexo:')!!}
-                    <input  name="anexo[]" id="anexo[]" type="file" size="50" accept="application/rtf"
-                            class="form-control" onchange="testararquivo()">
+                    <input  name="anexo[]" id="anexo[]" type="file" size="50" accept="application/pdf"
+                            class="form-control" onchange="testararquivo(this)">
                 </div>
 
-                <div id="addanexo" class="escondido"><!--col-md-2 addanexo-->
-                    <label for="firstName" class="control-label"><font color="#F0F0F0">.</font></label>
-                    <br>
+                <div id="addanexo" class="escondido col-md-1"><!--col-md-2 addanexo-->
+                  <br>
+                  <br>
                     <button type="button" id="addarquivoAnexo" class="addarquivoAnexo btn btn-primary">
                         <span class="glyphicon glyphicon-plus"></span>
                         <span class="glyphicon glyphicon glyphicon-inbox"></span>
                     </button>
                 </div>
 
-                <div id="removeadd" class="escondido">
-                    <label for="firstName" class="control-label"><font color="#F0F0F0">.</font></label>
-                    <br>
+                <div id="removeadd" class="escondido col-md-1">
+                  <br>
+                  <br>
                     <button type="button" id="remgeral" class="btn btn-danger" data-toggle="tooltip"
                             data-placement="top"
                             title="Não anexar nenhum arquivo">
@@ -215,7 +215,20 @@
 @section('content_js')
     <script type="text/javascript">
 
-        function testararquivo() {
+
+        function testararquivo(input) {
+            var extPermitidas = ['pdf'];
+            var extArquivo = input.value.split('.').pop();
+
+            if(input.value == ""){
+              return;
+            }
+
+            if(typeof extPermitidas.find(function(ext){ return extArquivo == ext; }) == 'undefined') {
+              swal('Erro', 'Extensão "' + extArquivo + '" não permitida!', 'error');
+              input.value = "";
+              return;
+            }
             if (document.getElementById("anexo[]").value.length > 4) {
                 document.getElementById("addanexo").className = "col-md-2 addanexo";
                 document.getElementById("removeadd").className = "col-md-2 remAdd";
@@ -249,7 +262,7 @@
             $(add_buttonTelPF).click(function (e) {
                 if (hab == 1) {
                     e.preventDefault();
-                    $(wrapperTelPF).append('<div class=\"col-lg-12\"><div class=\"col-lg-7\"><label for=\"firstName\" class=\"control-label\"><font color=\"#F0F0F0\">.</font></label><input required name=\"anexo[]\" id=\"anexo[]\" type=\"file\" class=\"form-control\" size=\"50\" accept=\"application/pdf\"></div><div class=\"remTelefone col-lg-1\"><br><button class=\"btn btn-danger\" type=\"button\"><span class=\"glyphicon glyphicon-minus\"></span></button></div></div>');
+                    $(wrapperTelPF).append('<div class=\"col-lg-12\"><div class=\"col-lg-7\"><label for=\"firstName\" class=\"control-label\"><font color=\"#F0F0F0\">.</font></label><input required name=\"anexo[]\" id=\"anexo[]\" type=\"file\" onchange=\"testararquivo(this)\" class=\"form-control\" size=\"50\" accept=\"application/pdf\"></div><div class=\"remTelefone col-lg-1\"><br><button class=\"btn btn-danger\" type=\"button\"><span class=\"glyphicon glyphicon-minus\"></span></button></div></div>');
                     xTelPF++;
                 }
             });
